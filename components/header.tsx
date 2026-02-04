@@ -43,7 +43,7 @@ export function Header() {
               className="hover:opacity-80 transition-colors"
               style={{ color: '#FFCC07' }}
             >
-              About Us
+              About Teacher
             </Link>
             <Link
               href="#gallery"
@@ -108,7 +108,7 @@ export function Header() {
               style={{ color: '#FFCC07' }}
               onClick={() => setIsOpen(false)}
             >
-              About Us
+              About Teacher
             </Link>
             <Link
               href="#gallery"
