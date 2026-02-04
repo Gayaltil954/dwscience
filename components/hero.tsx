@@ -5,8 +5,27 @@ import { ArrowRight } from 'lucide-react';
 
 export function Hero() {
   return (
-    <section id="home" className="min-h-screen bg-background pt-20 pb-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="home" className="min-h-screen bg-background pt-20 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Periodic Table Background Effect */}
+      <div className="absolute inset-0 pointer-events-none" style={{ top: '80px' }}>
+        <div className="w-full h-full p-2 opacity-10" style={{ 
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))',
+          gridAutoRows: 'minmax(60px, auto)',
+          alignContent: 'center',
+          justifyContent: 'center'
+        }}>
+          {[...Array(250)].map((_, i) => {
+            const elements = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Fe', 'Cu', 'Zn', 'Ag', 'Au'];
+            return (
+              <div key={i} className="border border-accent/20 rounded m-0.5 flex items-center justify-center">
+                <span className="text-accent font-bold text-xs">{elements[i % elements.length]}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-5rem)]">
           {/* Left Content */}
           <div className="flex flex-col justify-center space-y-6 md:space-y-8">

@@ -36,20 +36,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
-          <div>
-            <h4 className="font-bold mb-4" style={{ color: '#000000' }}>Resources</h4>
-            <ul className="space-y-2">
-              {['Curriculum', 'Study Materials', 'Class Schedule', 'FAQ'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="hover:opacity-70 transition-opacity text-sm" style={{ color: '#333333' }}>
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Contact Info */}
           <div>
             <h4 className="font-bold mb-4" style={{ color: '#000000' }}>Get In Touch</h4>

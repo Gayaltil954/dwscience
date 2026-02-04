@@ -9,114 +9,119 @@ export function Contact() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 bg-card border-4 border-accent rounded-3xl overflow-hidden animate-fade-in-up">
           {/* Left Side - Contact Info */}
-          <div className="bg-primary p-8 sm:p-12 flex flex-col justify-between">
+          <div className="p-8 sm:p-12 flex flex-col justify-between" style={{ backgroundColor: '#FFCC07' }}>
             <div>
-              <h3 className="text-3xl sm:text-4xl font-black text-foreground mb-3">Contact Information</h3>
-              <p className="text-muted-foreground mb-12 text-lg">We&apos;re here to support your learning journey.</p>
+              <h3 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: '#000000' }}>Contact Information</h3>
+              <p className="mb-12 text-lg" style={{ color: 'rgba(0,0,0,0.7)' }}>We&apos;re here to support your learning journey.</p>
 
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
-                  <Phone className="w-6 h-6 text-accent shrink-0 mt-1" />
+                  <Phone className="w-6 h-6 shrink-0 mt-1" style={{ color: '#000000' }} />
                   <div>
-                    <p className="font-semibold text-foreground">Phone</p>
-                    <p className="text-muted-foreground">071 694 5070</p>
+                    <p className="font-semibold" style={{ color: '#000000' }}>Phone</p>
+                    <p style={{ color: 'rgba(0,0,0,0.7)' }}>071 694 5070</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Mail className="w-6 h-6 text-accent shrink-0 mt-1" />
+                  <Mail className="w-6 h-6 shrink-0 mt-1" style={{ color: '#000000' }} />
                   <div>
-                    <p className="font-semibold text-foreground">Email</p>
-                    <p className="text-muted-foreground">diliniwerrakkody81@gmail.com</p>
+                    <p className="font-semibold" style={{ color: '#000000' }}>Email</p>
+                    <p style={{ color: 'rgba(0,0,0,0.7)' }}>diliniwerrakkody81@gmail.com</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <MapPin className="w-6 h-6 text-accent shrink-0 mt-1" />
+                  <MapPin className="w-6 h-6 shrink-0 mt-1" style={{ color: '#000000' }} />
                   <div>
-                    <p className="font-semibold text-foreground">Location</p>
-                    <p className="text-muted-foreground">132 Dartmouth Street Boston,<br />Massachusetts 02156 United States</p>
+                    <p className="font-semibold" style={{ color: '#000000' }}>Location</p>
+                    <p style={{ color: 'rgba(0,0,0,0.7)' }}>132 Dartmouth Street Boston,<br />Massachusetts 02156 United States</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="flex gap-4 mt-8">
-              <Button variant="ghost" size="icon" className="bg-accent/20 hover:bg-accent/30 text-accent rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full hover:scale-110 transition-transform" style={{ backgroundColor: 'rgba(0,0,0,0.2)', color: '#000000' }}>
                 <Facebook className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="bg-accent/20 hover:bg-accent/30 text-accent rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full hover:scale-110 transition-transform" style={{ backgroundColor: 'rgba(0,0,0,0.2)', color: '#000000' }}>
                 <Youtube className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="bg-accent/20 hover:bg-accent/30 text-accent rounded-full">
+              <Button variant="ghost" size="icon" className="rounded-full hover:scale-110 transition-transform" style={{ backgroundColor: 'rgba(0,0,0,0.2)', color: '#000000' }}>
                 <Phone className="w-5 h-5" />
               </Button>
             </div>
           </div>
 
           {/* Right Side - Form */}
-          <div className="p-8 sm:p-12">
+          <div className="p-8 sm:p-12" style={{ backgroundColor: '#ffffff' }}>
             <form className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">First Name</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: '#000000' }}>First Name</label>
                   <input
                     type="text"
-                    placeholder="John"
-                    className="w-full px-4 py-3 border-b-2 border-border bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent transition-colors"
+                    placeholder="Sahan"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-colors"
+                    style={{ borderColor: '#cccccc', color: '#000000' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Last Name</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: '#000000' }}>Last Name</label>
                   <input
                     type="text"
-                    placeholder="Doe"
-                    className="w-full px-4 py-3 border-b-2 border-border bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent transition-colors"
+                    placeholder="Perera"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-colors"
+                    style={{ borderColor: '#cccccc', color: '#000000' }}
                   />
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: '#000000' }}>Email</label>
                   <input
                     type="email"
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-3 border-b-2 border-border bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent transition-colors"
+                    placeholder="sahan@example.com"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-colors"
+                    style={{ borderColor: '#cccccc', color: '#000000' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Phone Number</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: '#000000' }}>Phone Number</label>
                   <input
                     type="tel"
-                    placeholder="+1 012 3456 789"
-                    className="w-full px-4 py-3 border-b-2 border-border bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent transition-colors"
+                    placeholder="077 123 4569"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-colors"
+                    style={{ borderColor: '#cccccc', color: '#000000' }}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-4">Select Subject?</label>
+                <label className="block text-sm font-semibold mb-4" style={{ color: '#000000' }}>Select Subject?</label>
                 <div className="flex flex-wrap gap-4">
                   {['Course Inquiry', 'Enrollment Support', 'Academic Guidance', 'Other'].map((subject) => (
-                    <label key={subject} className="flex items-center gap-2 cursor-pointer">
+                    <label key={subject} className="flex items-center gap-2 cursor-pointer" style={{ color: '#000000' }}>
                       <input type="radio" name="subject" value={subject} className="w-4 h-4" />
-                      <span className="text-sm text-foreground">{subject}</span>
+                      <span className="text-sm">{subject}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Message</label>
+                <label className="block text-sm font-semibold mb-2" style={{ color: '#000000' }}>Message</label>
                 <textarea
                   placeholder="Write your message..."
                   rows={4}
-                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-accent transition-colors resize-none"
+                  className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-colors resize-none"
+                  style={{ borderColor: '#cccccc', color: '#000000' }}
                 />
               </div>
 
-              <Button className="bg-primary border-2 border-primary text-foreground hover:bg-primary/90 px-8 py-3 font-bold rounded-lg w-full md:w-auto">
+              <Button className="px-8 py-3 font-bold rounded-lg w-full md:w-auto border-2" style={{ backgroundColor: '#FFCC07', color: '#000000', borderColor: '#FFCC07' }}>
                 Send Message
               </Button>
             </form>
