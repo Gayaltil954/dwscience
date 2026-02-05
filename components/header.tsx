@@ -79,7 +79,7 @@ export function Header() {
               href="https://wa.me/94716945070" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-accent/10 text-accent hover:bg-accent hover:text-black transition-all duration-300 hover:scale-110 hover:rotate-12 hover:shadow-lg hover:shadow-accent/50"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300 hover:scale-110 hover:rotate-12"
               aria-label="WhatsApp"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ export function Header() {
               href="https://facebook.com/yourfacebookpage" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-accent/10 text-accent hover:bg-accent hover:text-black transition-all duration-300 hover:scale-110 hover:rotate-12 hover:shadow-lg hover:shadow-accent/50"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300 hover:scale-110 hover:rotate-12"
               aria-label="Facebook"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@ export function Header() {
               href="https://youtube.com/youryoutubechannel" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-accent/10 text-accent hover:bg-accent hover:text-black transition-all duration-300 hover:scale-110 hover:rotate-12 hover:shadow-lg hover:shadow-accent/50"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300 hover:scale-110 hover:rotate-12"
               aria-label="YouTube"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -154,7 +154,7 @@ export function Header() {
                 href="https://wa.me/94716945070" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-accent hover:bg-accent hover:text-black transition-all duration-300"
+                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
                 aria-label="WhatsApp"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@ export function Header() {
                 href="https://facebook.com/yourfacebookpage" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-accent hover:bg-accent hover:text-black transition-all duration-300"
+                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
                 aria-label="Facebook"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -176,7 +176,7 @@ export function Header() {
                 href="https://youtube.com/youryoutubechannel" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-accent hover:bg-accent hover:text-black transition-all duration-300"
+                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
                 aria-label="YouTube"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
