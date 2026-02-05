@@ -58,7 +58,7 @@ export function ClassCenters() {
           {centers.map((center, index) => (
             <div
               key={center.id}
-              className="flex-shrink-0 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group hover:scale-105 hover:shadow-xl animate-fade-in-up"
+              className="shrink-0 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group hover:scale-105 hover:shadow-xl animate-fade-in-up"
               style={{ 
                 backgroundColor: '#FFFFFF',
                 width: '90vw',

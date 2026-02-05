@@ -8,11 +8,11 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'DW Science - Excellence in Science Education',
+  title: 'dwscience - Excellence in Science Education',
   description: 'Discover science learning with Dilini Weerakkody. English-medium science classes for grades 6-11, designed to inspire curiosity and deep understanding.',
   generator: 'v0.app',
   openGraph: {
-    title: 'DW Science - Excellence in Science Education',
+    title: 'dwscience - Excellence in Science Education',
     description: 'Discover science learning with Dilini Weerakkody. English-medium science classes for grades 6-11.',
     type: 'website',
   },

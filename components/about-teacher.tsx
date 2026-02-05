@@ -1,10 +1,12 @@
 'use client';
 
+import Image from 'next/image';
+
 export function AboutTeacher() {
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Content */}
           <div className="flex flex-col space-y-6 animate-fade-in-up">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground text-balance">
@@ -23,10 +25,15 @@ export function AboutTeacher() {
           </div>
 
           {/* Right Image */}
-          <div className="relative h-80 sm:h-96 md:h-full md:min-h-96 bg-linear-to-br from-accent/20 to-background rounded-2xl flex items-center justify-center animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-            <div className="text-center text-muted-foreground">
-              <p className="text-sm">Teacher Photo</p>
-            </div>
+          <div className="relative h-96 sm:h-125 md:h-full md:min-h-150 rounded-2xl overflow-hidden animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+            <Image
+              src="/aboutme.jpeg"
+              alt="Dilini Weerakkody - Science Teacher"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { Logo3D } from '@/components/logo-3d';
 
 export function Hero() {
   return (
@@ -58,28 +59,16 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Video */}
-          <div className="relative flex items-center justify-center order-first md:order-last" style={{ perspective: '1200px' }}>
+          {/* Right 3D Logo */}
+          <div className="relative flex items-center justify-center order-first md:order-last h-75 sm:h-100 md:h-auto" style={{ perspective: '1200px' }}>
             <div 
-              className="relative w-full max-w-6xl aspect-square" 
+              className="relative w-full max-w-70 sm:max-w-md md:max-w-6xl aspect-square" 
               style={{ 
                 transformStyle: 'preserve-3d',
-                /*animation: 'rotate-3d 8s ease-in-out infinite',*/
                 filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(255, 204, 7, 0.4))'
               }}
             >
-              <video
-                src="/vdo1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-contain"
-                style={{ 
-                  transform: 'translateZ(50px)',
-                  filter: 'brightness(1.1) contrast(1.05)'
-                }}
-              />
+              <Logo3D variant="cylinder" />
             </div>
           </div>
         </div>
