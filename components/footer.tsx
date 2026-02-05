@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Facebook, Youtube, Mail, Phone, ChevronRight } from 'lucide-react';
+import { Facebook, MessageCircle, Mail, Phone, ChevronRight } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -118,14 +118,14 @@ export function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://wa.me/94716945070"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-rotate-6 hover:shadow-lg"
                 style={{ backgroundColor: '#FFCC07', color: '#000000' }}
-                aria-label="YouTube"
+                aria-label="WhatsApp"
               >
-                <Youtube className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5" />
               </a>
               <a
                 href="mailto:diliniwerrakkody81@gmail.com"
