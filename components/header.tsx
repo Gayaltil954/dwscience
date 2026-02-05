@@ -12,10 +12,19 @@ export function Header() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -41,6 +50,7 @@ export function Header() {
   const navLinks = [
     { href: '#home', label: 'Home' },
     { href: '#about', label: 'About Teacher' },
+    { href: '#class-centers', label: 'Class Centers' },
     { href: '#gallery', label: 'Gallery' },
     { href: '#contact', label: 'Contact Us' },
   ];
@@ -158,7 +168,7 @@ export function Header() {
           scrolled ? 'h-16' : 'h-20'
         }`}>
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group relative">
+          <a href="#home" onClick={(e) => smoothScrollTo(e, '#home')} className="flex items-center gap-3 group relative cursor-pointer">
             <div className="relative">
               <div className="absolute inset-0 bg-accent/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
               <div className="relative transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
@@ -172,9 +182,9 @@ export function Header() {
               </div>
             </div>
             <span className="text-foreground font-bold text-lg tracking-wide hidden sm:inline group-hover:text-accent transition-colors duration-300">
-              dwscience.lk
+              dwscience.com
             </span>
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-2">

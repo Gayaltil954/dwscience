@@ -11,25 +11,37 @@ export function AboutTeacher() {
   const statsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate smooth progress
-      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-      const visibilityRatio = visibleHeight / rect.height;
-      const progress = Math.max(0, Math.min(1, visibilityRatio * 2.5));
-      
-      setScrollProgress(progress);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!sectionRef.current) {
+            ticking = false;
+            return;
+          }
+          
+          const rect = sectionRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          
+          // Calculate smooth progress
+          const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+          const visibilityRatio = visibleHeight / rect.height;
+          const progress = Math.max(0, Math.min(1, visibilityRatio * 2.5));
+          
+          setScrollProgress(progress);
 
-      // Check if stats are visible
-      if (statsRef.current) {
-        const statsRect = statsRef.current.getBoundingClientRect();
-        if (statsRect.top < windowHeight * 0.8 && statsRect.bottom > 0) {
-          setStatsVisible(true);
-        }
+          // Check if stats are visible
+          if (statsRef.current && !statsVisible) {
+            const statsRect = statsRef.current.getBoundingClientRect();
+            if (statsRect.top < windowHeight * 0.8 && statsRect.bottom > 0) {
+              setStatsVisible(true);
+            }
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -37,7 +49,7 @@ export function AboutTeacher() {
     handleScroll();
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [statsVisible]);
 
   // Counter animation effect
   useEffect(() => {
@@ -71,6 +83,7 @@ export function AboutTeacher() {
       ref={sectionRef} 
       id="about" 
       className="relative min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+      style={{ willChange: scrollProgress > 0 && scrollProgress < 1 ? 'transform' : 'auto' }}
     >
       {/* Animated geometric background */}
       <div className="absolute inset-0 pointer-events-none opacity-30">
@@ -86,6 +99,7 @@ export function AboutTeacher() {
               borderRadius: i % 2 === 0 ? '50%' : '0',
               transform: `rotate(${i * 15 + scrollProgress * 360}deg) scale(${0.5 + scrollProgress * 0.5})`,
               opacity: scrollProgress * 0.4,
+              willChange: scrollProgress > 0 && scrollProgress < 1 ? 'transform, opacity' : 'auto',
               transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
             }}
           />
@@ -102,6 +116,7 @@ export function AboutTeacher() {
               transform: `translateY(${(1 - scrollProgress) * 200}px) scale(${0.6 + scrollProgress * 0.4})`,
               opacity: scrollProgress,
               filter: `blur(${(1 - scrollProgress) * 15}px)`,
+              willChange: scrollProgress > 0 && scrollProgress < 1 ? 'transform, opacity, filter' : 'auto',
               transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out, filter 0.6s ease-out'
             }}
           >

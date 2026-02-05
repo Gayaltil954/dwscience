@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Play, ZoomIn } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: { 
   items: { id: number; image: string; size: string; type: string }[]; 
@@ -36,6 +36,8 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
             sizes="200px"
+            loading="lazy"
+            quality={85}
           />
           
           <div 
@@ -84,6 +86,26 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
 
 export function Gallery() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const galleryItems = [
     { id: 1, image: '/class1.jpg', size: 'large', type: 'image' },
@@ -96,8 +118,10 @@ export function Gallery() {
     { id: 8, image: '/class4.jpg', size: 'small', type: 'image' },
   ];
 
+  const isAnimationRunning = isVisible && !isPaused;
+
   return (
-    <section id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden">
+    <section ref={sectionRef} id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <h2 
           className="text-4xl sm:text-5xl lg:text-6xl font-black text-center mb-16 text-balance"
@@ -107,12 +131,17 @@ export function Gallery() {
         </h2>
 
         {/* Auto-Scrolling Bento Grids */}
-        <div className="relative">
+        <div 
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <div 
-            className="flex gap-6"
+            className="flex gap-6 gallery-scroll"
             style={{
-              animation: 'scrollBento 30s linear infinite',
-              width: 'fit-content'
+              width: 'fit-content',
+              willChange: isAnimationRunning ? 'transform' : 'auto',
+              animationPlayState: isAnimationRunning ? 'running' : 'paused'
             }}
           >
             <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={0} />
@@ -120,15 +149,31 @@ export function Gallery() {
             <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={200} />
             <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={300} />
           </div>
+          
+          {/* Gradient overlays for smooth edges */}
+          <div className="absolute top-0 left-0 bottom-0 w-32 pointer-events-none bg-gradient-to-r from-background to-transparent z-10"></div>
+          <div className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none bg-gradient-to-l from-background to-transparent z-10"></div>
         </div>
 
         <style jsx>{`
           @keyframes scrollBento {
             0% {
-              transform: translateX(0);
+              transform: translate3d(0, 0, 0);
             }
             100% {
-              transform: translateX(-50%);
+              transform: translate3d(-50%, 0, 0);
+            }
+          }
+
+          .gallery-scroll {
+            animation: scrollBento 40s linear infinite;
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .gallery-scroll {
+              animation: none;
             }
           }
         `}</style>

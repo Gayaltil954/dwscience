@@ -10,6 +10,7 @@ export function Footer() {
   const quickLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About Us', href: '#about' },
+    { name: 'Class Centers', href: '#class-centers' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Contact Us', href: '#contact' },
   ];
@@ -34,7 +35,7 @@ export function Footer() {
                   className="object-contain"
                 />
               </div>
-              <span className="font-bold text-xl" style={{ color: '#000000' }}>dwscience.lk</span>
+              <span className="font-bold text-xl" style={{ color: '#000000' }}>dwscience.com</span>
             </div>
             <p className="text-base leading-relaxed mb-4" style={{ color: '#555555' }}>
               Excellence in science education for grades 6-11.
@@ -157,7 +158,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-sm" style={{ color: '#888888' }}>
-            &copy; {currentYear} <span className="font-semibold" style={{ color: '#000000' }}>dwscience.lk</span> - All rights reserved.
+            &copy; {currentYear} <span className="font-semibold" style={{ color: '#000000' }}>dwscience.com</span> - All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm">
             <Link href="#" className="hover:text-accent transition-colors" style={{ color: '#888888' }}>
