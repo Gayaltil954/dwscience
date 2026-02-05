@@ -19,6 +19,25 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      const headerOffset = 80;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    
+    setIsOpen(false);
+  };
+
   const navLinks = [
     { href: '#home', label: 'Home' },
     { href: '#about', label: 'About Teacher' },
@@ -32,6 +51,108 @@ export function Header() {
         scrolled ? 'bg-background/98 shadow-xl' : 'bg-background/95 shadow-lg'
       } backdrop-blur-md`}
     >
+      <style>{`
+        @keyframes underlineExpand {
+          0% {
+            width: 0;
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            width: 75%;
+            opacity: 1;
+          }
+        }
+
+        @keyframes shimmerUnderline {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+
+        .nav-link {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .nav-link::before {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, 
+            transparent, 
+            #FFCC07, 
+            #FFA500,
+            #FFCC07, 
+            transparent
+          );
+          background-size: 200% 100%;
+          transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          opacity: 0;
+        }
+
+        .nav-link:hover::before {
+          animation: underlineExpand 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: -100%;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.8), 
+            transparent
+          );
+          transition: left 0.6s ease;
+        }
+
+        .nav-link:hover::after {
+          animation: shimmerUnderline 1.2s ease infinite;
+        }
+
+        .nav-link-text {
+          transition: all 0.3s ease;
+        }
+
+        .nav-link:hover .nav-link-text {
+          transform: translateY(-2px);
+          text-shadow: 0 0 15px rgba(255, 204, 7, 0.6),
+                       0 0 30px rgba(255, 204, 7, 0.4);
+        }
+
+        .mobile-nav-link {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .mobile-nav-link::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #FFCC07, #FFA500);
+          transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-nav-link:hover::before {
+          width: 100%;
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between items-center transition-all duration-300 ${
           scrolled ? 'h-16' : 'h-20'
@@ -58,18 +179,17 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
-                className="relative px-4 py-2 font-medium text-sm transition-all duration-300 group"
+                onClick={(e) => smoothScrollTo(e, link.href)}
+                className="nav-link relative px-4 py-2 font-medium text-sm transition-all duration-300"
                 style={{ color: '#FFCC07' }}
               >
-                <span className="relative z-10 group-hover:drop-shadow-[0_0_8px_rgba(255,204,7,0.8)] transition-all duration-300">
+                <span className="nav-link-text relative z-10">
                   {link.label}
                 </span>
-                <div className="absolute inset-0 bg-accent/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent group-hover:w-3/4 transition-all duration-300"></div>
-              </Link>
+              </a>
             ))}
           </nav>
 
@@ -133,21 +253,21 @@ export function Header() {
         >
           <nav className="pb-4 pt-2 space-y-1">
             {navLinks.map((link, index) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
-                className="block font-medium px-4 py-3 rounded-lg hover:bg-accent/10 transition-all duration-300 transform hover:translate-x-2"
+                onClick={(e) => smoothScrollTo(e, link.href)}
+                className="mobile-nav-link block font-medium px-4 py-3 rounded-lg hover:bg-accent/10 transition-all duration-300 transform hover:translate-x-2"
                 style={{ 
                   color: '#FFCC07',
                   animationDelay: `${index * 50}ms`
                 }}
-                onClick={() => setIsOpen(false)}
               >
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
                   {link.label}
                 </span>
-              </Link>
+              </a>
             ))}
             <div className="flex gap-3 px-4 pt-4 border-t border-accent/20 mt-4">
               <Link 
