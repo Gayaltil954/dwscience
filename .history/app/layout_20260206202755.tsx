@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   description:
     "Join Dilini Weerakkody for English-medium Science (Grades 6-11) at Sunray (Galle), Zigma (Baddegama), and Princeton College (Hirikumbura). Enroll for 2026 batches.",
   verification: {
-    google: "UwJXG3kgnB1vtpslZfH7SJpeCe2FqE-eCia1PG1i3GQ", // Put the code you copied here
+    google: "ABCD_123_EXAMPLE", // Put the code you copied here
   },
   generator: "v0.app",
 
