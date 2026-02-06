@@ -95,7 +95,7 @@ export function Footer() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-semibold mb-1" style={{ color: '#888888' }}>EMAIL</p>
-                  <p className="font-medium break-all" style={{ color: '#333333' }}>diliniwerrakkody81@gmail.com</p>
+                  <p className="font-medium break-all" style={{ color: '#333333' }}>diliniweerakkodi91@gmail.com</p>
                 </div>
               </a>
             </div>
