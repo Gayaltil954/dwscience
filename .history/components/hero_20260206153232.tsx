@@ -103,10 +103,6 @@ export function Hero() {
                 </span>
                 .
               </p>
-              {/* Only for screen readers */}
-              <span className="sr-only">
-                Best science teacher in Galle and Baddegama for O/L students.
-              </span>
             </div>
 
             <div>
@@ -122,6 +118,7 @@ export function Hero() {
                 Our Process
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
+              <span className="sr-only">Best science teacher in Galle and Baddegama for O/L students.</span>
             </div>
           </div>
 
