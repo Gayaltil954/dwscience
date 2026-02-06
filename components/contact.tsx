@@ -39,7 +39,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold" style={{ color: '#000000' }}>Email</p>
-                    <p className="break-all" style={{ color: 'rgba(0,0,0,0.7)' }}>diliniwerrakkody81@gmail.com</p>
+                    <p className="break-all" style={{ color: 'rgba(0,0,0,0.7)' }}>diliniweerakkodi91@gmail.com</p>
                   </div>
                 </div>
 
