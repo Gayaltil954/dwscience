@@ -1,12 +1,16 @@
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Features } from "@/components/features";
+import { StatsSection } from "@/components/stats-section";
 import { Process } from "@/components/process";
 import { Gallery } from "@/components/gallery";
 import { ClassCenters } from "@/components/class-centers";
 import { AboutTeacher } from "@/components/about-teacher";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { AnimatedBackground } from "@/components/animated-background";
+import { FloatingParticles } from "@/components/floating-particles";
 
 //SEO - JSON-LD - Authn
 <script
@@ -37,10 +41,14 @@ import { Footer } from "@/components/footer";
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
+      <AnimatedBackground />
+      <FloatingParticles />
       <Header />
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-background relative">
         <Hero />
         <Features />
+        <StatsSection />
         <Process />
         <Gallery />
         <ClassCenters />

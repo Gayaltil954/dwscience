@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,10 +57,13 @@ export function Header() {
   ];
 
   return (
-    <header 
+    <motion.header 
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled ? 'bg-background/98 shadow-xl' : 'bg-background/95 shadow-lg'
       } backdrop-blur-md`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <style>{`
         @keyframes underlineExpand {
@@ -239,80 +243,152 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden text-accent hover:bg-accent/10 transition-all duration-300"
-            onClick={() => setIsOpen(!isOpen)}
+          <motion.div
+            whileTap={{ scale: 0.9 }}
           >
-            {isOpen ? (
-              <X className="w-6 h-6 rotate-90 transition-transform duration-300" />
-            ) : (
-              <Menu className="w-6 h-6 transition-transform duration-300" />
-            )}
-          </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden text-accent hover:bg-accent/10 transition-all duration-300"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <AnimatePresence mode="wait">
+                {isOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="w-6 h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="w-6 h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Button>
+          </motion.div>
         </div>
 
         {/* Mobile Navigation */}
-        <div 
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <nav className="pb-4 pt-2 space-y-1">
-            {navLinks.map((link, index) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => smoothScrollTo(e, link.href)}
-                className="mobile-nav-link block font-medium px-4 py-3 rounded-lg hover:bg-accent/10 transition-all duration-300 transform hover:translate-x-2"
-                style={{ 
-                  color: '#FFCC07',
-                  animationDelay: `${index * 50}ms`
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden"
+            >
+              <motion.nav 
+                className="pb-4 pt-2 space-y-1"
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={{
+                  open: {
+                    transition: { staggerChildren: 0.05, delayChildren: 0.1 }
+                  },
+                  closed: {
+                    transition: { staggerChildren: 0.05, staggerDirection: -1 }
+                  }
                 }}
               >
-                <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                  {link.label}
-                </span>
-              </a>
-            ))}
-            <div className="flex gap-3 px-4 pt-4 border-t border-accent/20 mt-4">
-              <Link 
-                href="https://wa.me/94716945070" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
-                aria-label="WhatsApp"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.18-.31.08-1.26.33.33-1.22.09-.34-.2-.32a8.188 8.188 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.12.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
-                </svg>
-              </Link>
-              <Link 
-                href="https://facebook.com/yourfacebookpage" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
-                aria-label="Facebook"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-              </Link>
-              <Link 
-                href="mailto:diliniwerrakkody81@gmail.com" 
-                className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
-                aria-label="Email"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                </svg>
-              </Link>
-            </div>
-          </nav>
-        </div>
+                {navLinks.map((link) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => smoothScrollTo(e, link.href)}
+                    className="block font-medium px-4 py-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
+                    style={{ color: '#FFCC07' }}
+                    variants={{
+                      open: {
+                        x: 0,
+                        opacity: 1,
+                        transition: {
+                          x: { stiffness: 1000, velocity: -100 }
+                        }
+                      },
+                      closed: {
+                        x: -50,
+                        opacity: 0,
+                        transition: {
+                          x: { stiffness: 1000 }
+                        }
+                      }
+                    }}
+                    whileHover={{ x: 8, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <motion.span 
+                        className="w-1.5 h-1.5 rounded-full bg-accent"
+                        animate={{ scale: [1, 1.3, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      {link.label}
+                    </span>
+                  </motion.a>
+                ))}
+                <motion.div 
+                  className="flex gap-3 px-4 pt-4 border-t border-accent/20 mt-4"
+                  variants={{
+                    open: { opacity: 1, y: 0 },
+                    closed: { opacity: 0, y: -20 }
+                  }}
+                >
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link 
+                      href="https://wa.me/94716945070" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
+                      aria-label="WhatsApp"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.18-.31.08-1.26.33.33-1.22.09-.34-.2-.32a8.188 8.188 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.12.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
+                      </svg>
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link 
+                      href="https://facebook.com/yourfacebookpage" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
+                      aria-label="Facebook"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                      </svg>
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link 
+                      href="mailto:diliniwerrakkody81@gmail.com" 
+                      className="flex-1 h-10 rounded-lg flex items-center justify-center bg-accent/10 text-white hover:text-[#FFCC07] transition-all duration-300"
+                      aria-label="Email"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                      </svg>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </motion.nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 }

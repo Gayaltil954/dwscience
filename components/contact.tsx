@@ -2,15 +2,52 @@
 
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin, Facebook, Youtube } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, staggerItem, defaultViewport } from "@/lib/animations";
+import { MagneticButton } from "@/components/magnetic-button";
+import emailjs from '@emailjs/browser';
 
 export function Contact() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
+  const [resultMsg, setResultMsg] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSending(true);
+    setResultMsg(null);
+    try {
+      const res = await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        formRef.current!,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+      setResultMsg('Message sent successfully!');
+      formRef.current?.reset();
+    } catch (err) {
+      setResultMsg('Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+    <motion.section 
+      id="contact" 
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-background"
+      initial="hidden"
+      whileInView="visible"
+      viewport={defaultViewport}
+      variants={staggerContainer}
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 bg-card rounded-3xl overflow-hidden animate-fade-in-up shadow-2xl hover:shadow-[0_0_60px_rgba(255,204,7,0.3)] transition-shadow duration-500">
+        <motion.div 
+          className="grid md:grid-cols-2 gap-8 lg:gap-12 bg-card rounded-3xl overflow-hidden animate-fade-in-up shadow-2xl hover:shadow-[0_0_60px_rgba(255,204,7,0.3)] transition-shadow duration-500"
+          variants={fadeInUp}
+        >
           {/* Left Side - Contact Info */}
           <div
             className="p-8 sm:p-12 flex flex-col justify-between relative overflow-hidden"
@@ -158,7 +195,7 @@ export function Contact() {
 
           {/* Right Side - Form */}
           <div className="p-8 sm:p-12" style={{ backgroundColor: "#ffffff" }}>
-            <form className="space-y-6">
+            <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div
                   className="animate-fade-in-up"
@@ -172,6 +209,7 @@ export function Contact() {
                   </label>
                   <input
                     type="text"
+                    name="firstName"
                     placeholder="Sahan"
                     onFocus={() => setFocusedField("firstName")}
                     onBlur={() => setFocusedField(null)}
@@ -185,6 +223,7 @@ export function Contact() {
                           ? "translateY(-2px)"
                           : "none",
                     }}
+                    required
                   />
                 </div>
                 <div
@@ -199,6 +238,7 @@ export function Contact() {
                   </label>
                   <input
                     type="text"
+                    name="lastName"
                     placeholder="Perera"
                     onFocus={() => setFocusedField("lastName")}
                     onBlur={() => setFocusedField(null)}
@@ -212,6 +252,7 @@ export function Contact() {
                           ? "translateY(-2px)"
                           : "none",
                     }}
+                    required
                   />
                 </div>
               </div>
@@ -229,6 +270,7 @@ export function Contact() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     placeholder="sahan@example.com"
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
@@ -240,6 +282,7 @@ export function Contact() {
                       transform:
                         focusedField === "email" ? "translateY(-2px)" : "none",
                     }}
+                    required
                   />
                 </div>
                 <div
@@ -254,6 +297,7 @@ export function Contact() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
                     placeholder="077 123 4569"
                     onFocus={() => setFocusedField("phone")}
                     onBlur={() => setFocusedField(null)}
@@ -296,6 +340,7 @@ export function Contact() {
                         name="subject"
                         value={subject}
                         className="w-4 h-4 accent-[#FFCC07] transition-transform group-hover:scale-125"
+                        required={idx === 0}
                       />
                       <span className="text-sm group-hover:text-[#FFCC07] transition-colors duration-300">
                         {subject}
@@ -316,6 +361,7 @@ export function Contact() {
                   Message
                 </label>
                 <textarea
+                  name="message"
                   placeholder="Write your message..."
                   rows={4}
                   onFocus={() => setFocusedField("message")}
@@ -328,6 +374,7 @@ export function Contact() {
                     transform:
                       focusedField === "message" ? "translateY(-2px)" : "none",
                   }}
+                  required
                 />
               </div>
 
@@ -342,14 +389,19 @@ export function Contact() {
                     color: "#000000",
                     borderColor: "#FFCC07",
                   }}
+                  type="submit"
+                  disabled={sending}
                 >
-                  Send Message
+                  {sending ? 'Sending...' : 'Send Message'}
                 </Button>
+                            {resultMsg && (
+                              <div className={`mt-4 text-center font-semibold ${resultMsg.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{resultMsg}</div>
+                            )}
               </div>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

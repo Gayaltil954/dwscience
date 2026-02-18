@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MapPin, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Center {
   id: number;
@@ -48,7 +49,8 @@ const CenterCard = ({ center, isFlipped, onFlip }: { center: Center; isFlipped: 
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 400px"
               loading="lazy"
-              quality={85}
+              quality={100}
+              style={{ objectFit: 'cover', objectPosition: 'center', maxWidth: '100%', maxHeight: '100%' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -131,7 +133,7 @@ export function ClassCenters() {
     { 
       id: 1, 
       name: 'Galle Sunray', 
-      image: '/class1.jpg',
+      image: '/galle.jpg',
       timetable: [
         { day: 'Saturday', time: '4:00 PM - 6:00 PM' },
         { day: 'Wednesday', time: '4:00 PM - 6:00 PM' },
@@ -143,7 +145,7 @@ export function ClassCenters() {
     { 
       id: 2, 
       name: 'Kandy Center', 
-      image: '/class2.jpg',
+      image: '/kandyy.jpg',
       timetable: [
         { day: 'Tuesday', time: '3:30 PM - 5:30 PM' },
         { day: 'Thursday', time: '3:30 PM - 5:30 PM' },
@@ -153,9 +155,9 @@ export function ClassCenters() {
       mapUrl: 'https://maps.google.com/?q=Kandy'
     },
     { 
-      id: 3, 
+      id: 3,
       name: 'Galle Center', 
-      image: '/class3.jpg',
+      image: '/galle1.jpg',
       timetable: [
         { day: 'Monday', time: '3:00 PM - 5:00 PM' },
         { day: 'Friday', time: '3:00 PM - 5:00 PM' },

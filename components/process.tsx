@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { fadeInUp, staggerContainer, staggerItem, defaultViewport } from '@/lib/animations';
 
 export function Process() {
   const [visibleIcons, setVisibleIcons] = useState<Set<number>>(new Set());
@@ -110,7 +112,14 @@ export function Process() {
   }, []);
 
   return (
-    <section id="process" className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden">
+    <motion.section 
+      id="process" 
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+      initial="hidden"
+      whileInView="visible"
+      viewport={defaultViewport}
+      variants={staggerContainer}
+    >
       <style>{`
         @keyframes drawPath {
           to {
@@ -419,6 +428,6 @@ export function Process() {
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

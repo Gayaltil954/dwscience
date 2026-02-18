@@ -3,6 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Logo3D } from "@/components/logo-3d";
+import { motion } from "framer-motion";
+import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, staggerItem, floatAnimation } from "@/lib/animations";
+import { MagneticButton } from "@/components/magnetic-button";
+import { TextReveal } from "@/components/text-reveal";
 
 export function Hero() {
   return (
@@ -69,14 +73,24 @@ export function Hero() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-5rem)]">
           {/* Left Content */}
-          <div className="flex flex-col justify-center space-y-6 md:space-y-8">
-            <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-tight text-balance">
+          <motion.div 
+            className="flex flex-col justify-center space-y-6 md:space-y-8"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div variants={staggerItem}>
+              <motion.h1 
+                className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-tight text-balance"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
                 Science with Dilini Weerakkody
-              </h1>
-            </div>
+              </motion.h1>
+            </motion.div>
 
-            <div className="space-y-3">
+            <motion.div className="space-y-3" variants={staggerItem}>
               {/* <p className="text-lg sm:text-xl text-foreground font-semibold">
                 Grades 6 – 11 | English Medium
               </p> */}
@@ -107,11 +121,11 @@ export function Hero() {
               <span className="sr-only">
                 Best science teacher in Galle and Baddegama for O/L students.
               </span>
-            </div>
+            </motion.div>
 
-            <div>
-              <Button
-                className="px-8 py-6 text-base font-bold rounded-md transition-colors hover:opacity-90"
+            <motion.div variants={staggerItem}>
+              <MagneticButton
+                className="px-8 py-6 text-base font-bold rounded-md transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,204,7,0.6)] relative overflow-hidden group"
                 style={{ backgroundColor: "#FFCC07", color: "#000000" }}
                 onClick={() => {
                   document
@@ -119,28 +133,46 @@ export function Hero() {
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                Our Process
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </div>
-          </div>
+                {/* Shine effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30"
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
+                />
+                <span className="relative z-10 flex items-center">
+                  Our Process
+                  <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="inline-block ml-2"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.span>
+                </span>
+              </MagneticButton>
+            </motion.div>
+          </motion.div>
 
           {/* Right 3D Logo */}
-          <div
+          <motion.div
             className="relative flex items-center justify-center order-first md:order-last h-75 sm:h-100 md:h-auto"
             style={{ perspective: "1200px" }}
+            initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           >
-            <div
+            <motion.div
               className="relative w-full max-w-70 sm:max-w-md md:max-w-6xl aspect-square"
               style={{
                 transformStyle: "preserve-3d",
                 filter:
                   "drop-shadow(0 25px 50px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(255, 204, 7, 0.4))",
               }}
+              animate={floatAnimation}
             >
               <Logo3D variant="cylinder" />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -22,7 +22,7 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-3 w-200 shrink-0" style={{ gridAutoRows: '150px' }}>
+    <div className="grid grid-cols-8 gap-3 w-300 shrink-0" style={{ gridAutoRows: '150px' }}>
       {items.map((item) => (
         <div
           key={`${item.id}-${offset}`}
@@ -33,11 +33,13 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
           <Image
             src={item.image}
             alt={`Gallery ${item.id}`}
-            fill
+            width={400}
+            height={300}
             className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="200px"
+            sizes="(max-width: 768px) 100vw, 400px"
             loading="lazy"
-            quality={85}
+            quality={100}
+            style={{ maxWidth: '100%', height: '100%' }}
           />
           
           <div 
@@ -108,14 +110,22 @@ export function Gallery() {
   }, []);
 
   const galleryItems = [
-    { id: 1, image: '/class1.jpg', size: 'large', type: 'image' },
-    { id: 2, image: '/class2.jpg', size: 'small', type: 'image' },
-    { id: 3, image: '/class3.jpg', size: 'small', type: 'image' },
-    { id: 4, image: '/class4.jpg', size: 'medium', type: 'image' },
-    { id: 5, image: '/class1.jpg', size: 'medium', type: 'image' },
-    { id: 6, image: '/class2.jpg', size: 'large', type: 'video' },
-    { id: 7, image: '/class3.jpg', size: 'small', type: 'image' },
-    { id: 8, image: '/class4.jpg', size: 'small', type: 'image' },
+    { id: 1, image: '/classs.jpeg', size: 'large', type: 'image' },
+    { id: 2, image: '/class2.jpeg', size: 'small', type: 'image' },
+    { id: 3, image: '/class3.jpeg', size: 'small', type: 'image' },
+    { id: 4, image: '/class4.jpeg', size: 'large', type: 'image' },
+    
+    { id: 6, image: '/class2.jpeg', size: 'large', type: 'image' },
+    { id: 7, image: '/class3.jpeg', size: 'large', type: 'image' },
+    { id: 8, image: '/class4.jpeg', size: 'small', type: 'image' },
+    { id: 9, image: '/classs.jpeg', size: 'large', type: 'image' },
+    { id: 10, image: '/class2.jpeg', size: 'small', type: 'image' },
+    { id: 11, image: '/class3.jpeg', size: 'small', type: 'image' },
+    { id: 12, image: '/class4.jpeg', size: 'large', type: 'image' },
+    { id: 13, image: '/class1.jpeg', size: 'medium', type: 'image' },
+    { id: 14, image: '/class2.jpeg', size: 'large', type: 'image' },
+    { id: 15, image: '/class3.jpeg', size: 'small', type: 'image' },
+    { id: 16, image: '/class4.jpeg', size: 'small', type: 'image' },
   ];
 
   const isAnimationRunning = isVisible && !isPaused;
@@ -130,53 +140,10 @@ export function Gallery() {
           Our Gallery
         </h2>
 
-        {/* Auto-Scrolling Bento Grids */}
-        <div 
-          className="relative"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div 
-            className="flex gap-6 gallery-scroll"
-            style={{
-              width: 'fit-content',
-              willChange: isAnimationRunning ? 'transform' : 'auto',
-              animationPlayState: isAnimationRunning ? 'running' : 'paused'
-            }}
-          >
-            <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={0} />
-            <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={100} />
-            <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={200} />
-            <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={300} />
-          </div>
-          
-          {/* Gradient overlays for smooth edges */}
-          <div className="absolute top-0 left-0 bottom-0 w-32 pointer-events-none bg-linear-to-r from-background to-transparent z-10"></div>
-          <div className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none bg-linear-to-l from-background to-transparent z-10"></div>
+        {/* Centered Static BentoGrid */}
+        <div className="flex justify-center items-center w-full">
+          <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={0} />
         </div>
-
-        <style jsx>{`
-          @keyframes scrollBento {
-            0% {
-              transform: translate3d(0, 0, 0);
-            }
-            100% {
-              transform: translate3d(-50%, 0, 0);
-            }
-          }
-
-          .gallery-scroll {
-            animation: scrollBento 40s linear infinite;
-            backface-visibility: hidden;
-            perspective: 1000px;
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-            .gallery-scroll {
-              animation: none;
-            }
-          }
-        `}</style>
       </div>
     </section>
   );
