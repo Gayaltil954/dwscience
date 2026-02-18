@@ -134,7 +134,7 @@ export function AboutTeacher() {
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-foreground relative inline-block">
               <span className="relative z-10">About Me</span>
               <div
-                className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-transparent blur-xl"
+                className="absolute inset-0 bg-linear-to-r from-yellow-500/20 to-transparent blur-xl"
                 style={{
                   transform: `scaleX(${scrollProgress * 2})`,
                   opacity: scrollProgress * 0.5,
@@ -157,7 +157,7 @@ export function AboutTeacher() {
               }}
             >
               {/* Main image container */}
-              <div className="relative h-[500px] lg:h-[600px] group">
+              <div className="relative h-125 lg:h-150 group">
                 {/* Layered shadow effect */}
                 <div
                   className="absolute inset-0 bg-yellow-500/20 rounded-3xl blur-2xl"
@@ -212,7 +212,7 @@ export function AboutTeacher() {
 
                   {/* Gradient overlay */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-br from-yellow-500/30 via-transparent to-transparent"
+                    className="absolute inset-0 bg-linear-to-br from-yellow-500/30 via-transparent to-transparent"
                     style={{
                       opacity: (1 - scrollProgress) * 0.5,
                       mixBlendMode: "overlay",
@@ -294,7 +294,7 @@ export function AboutTeacher() {
                   >
                     {/* Sliding reveal line */}
                     <div
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500 to-yellow-600"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-yellow-500 to-yellow-600"
                       style={{
                         height: `${Math.min(100, Math.max(0, (scrollProgress - index * 0.15 - 0.1) * 300))}%`,
                         opacity: scrollProgress > index * 0.15 ? 1 : 0,

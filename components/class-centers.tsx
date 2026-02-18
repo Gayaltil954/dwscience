@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { MapPin, Clock, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Clock } from 'lucide-react';
 
 interface Center {
   id: number;
@@ -57,14 +57,6 @@ const CenterCard = ({ center, isFlipped, onFlip }: { center: Center; isFlipped: 
                 <MapPin className="w-4 h-4" />
                 Tap to view details
               </p>
-            </div>
-            <div className="absolute top-4 right-4 animate-bounce">
-              <div 
-                className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
-                style={{ backgroundColor: '#FFCC07' }}
-              >
-                <ArrowLeft className="w-5 h-5 text-black" style={{ transform: 'rotate(180deg)' }} />
-              </div>
             </div>
           </div>
         </div>
@@ -138,10 +130,10 @@ export function ClassCenters() {
   const centers: Center[] = [
     { 
       id: 1, 
-      name: 'Colombo Center', 
+      name: 'Galle Sunray', 
       image: '/class1.jpg',
       timetable: [
-        { day: 'Monday', time: '4:00 PM - 6:00 PM' },
+        { day: 'Saturday', time: '4:00 PM - 6:00 PM' },
         { day: 'Wednesday', time: '4:00 PM - 6:00 PM' },
         { day: 'Saturday', time: '9:00 AM - 12:00 PM' },
       ],
@@ -250,20 +242,6 @@ export function ClassCenters() {
     setFlippedCard(flippedCard === id ? null : id);
   };
 
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      const scrollAmount = isMobile ? scrollRef.current.clientWidth : 420;
-      scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      const scrollAmount = isMobile ? scrollRef.current.clientWidth : 420;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
   return (
     <section ref={sectionRef} id="class-centers" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
@@ -272,25 +250,6 @@ export function ClassCenters() {
         </h2>
 
         <div className="relative">
-          {/* Navigation Buttons - Hidden on very small screens */}
-          <button
-            onClick={scrollLeft}
-            aria-label="Scroll left"
-            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 -ml-4 md:-ml-6"
-            style={{ backgroundColor: '#FFCC07' }}
-          >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-black" />
-          </button>
-
-          <button
-            onClick={scrollRight}
-            aria-label="Scroll right"
-            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 -mr-4 md:-mr-6"
-            style={{ backgroundColor: '#FFCC07' }}
-          >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-black" />
-          </button>
-
           <div 
             ref={scrollRef}
             className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 px-2 sm:px-4 snap-x snap-mandatory"

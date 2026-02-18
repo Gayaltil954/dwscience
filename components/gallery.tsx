@@ -22,7 +22,7 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-3 w-[800px] flex-shrink-0" style={{ gridAutoRows: '150px' }}>
+    <div className="grid grid-cols-4 gap-3 w-200 shrink-0" style={{ gridAutoRows: '150px' }}>
       {items.map((item) => (
         <div
           key={`${item.id}-${offset}`}
@@ -151,8 +151,8 @@ export function Gallery() {
           </div>
           
           {/* Gradient overlays for smooth edges */}
-          <div className="absolute top-0 left-0 bottom-0 w-32 pointer-events-none bg-gradient-to-r from-background to-transparent z-10"></div>
-          <div className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none bg-gradient-to-l from-background to-transparent z-10"></div>
+          <div className="absolute top-0 left-0 bottom-0 w-32 pointer-events-none bg-linear-to-r from-background to-transparent z-10"></div>
+          <div className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none bg-linear-to-l from-background to-transparent z-10"></div>
         </div>
 
         <style jsx>{`

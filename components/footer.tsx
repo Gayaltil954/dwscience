@@ -156,19 +156,10 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex justify-center items-center">
           <p className="text-sm" style={{ color: '#888888' }}>
             &copy; {currentYear} <span className="font-semibold" style={{ color: '#000000' }}>dwscience.com</span> - All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm">
-            <Link href="#" className="hover:text-accent transition-colors" style={{ color: '#888888' }}>
-              Privacy Policy
-            </Link>
-            <span style={{ color: '#E5E5E5' }}>•</span>
-            <Link href="#" className="hover:text-accent transition-colors" style={{ color: '#888888' }}>
-              Terms of Service
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
