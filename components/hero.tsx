@@ -16,7 +16,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen bg-background pt-20 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      className="min-h-screen bg-background pt-16 sm:pt-20 pb-8 sm:pb-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* GridScan Background Animation */}
       <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
@@ -35,17 +35,17 @@ export function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-5rem)]">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center min-h-[calc(100vh-5rem)]">
           {/* Left Content */}
           <motion.div 
-            className="flex flex-col justify-center space-y-6 md:space-y-8"
+            className="flex flex-col justify-center space-y-4 sm:space-y-6 md:space-y-8"
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
           >
             <motion.div variants={staggerItem}>
               <motion.h1 
-                className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-tight text-balance"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight text-balance"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -54,7 +54,7 @@ export function Hero() {
               </motion.h1>
             </motion.div>
 
-            <motion.div className="space-y-3" variants={staggerItem}>
+            <motion.div className="space-y-2 sm:space-y-3" variants={staggerItem}>
               {/* <p className="text-lg sm:text-xl text-foreground font-semibold">
                 Grades 6 – 11 | English Medium
               </p> */}
@@ -89,7 +89,7 @@ export function Hero() {
 
             <motion.div variants={staggerItem}>
               <MagneticButton
-                className="px-8 py-6 text-base font-bold rounded-md transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,204,7,0.6)] relative overflow-hidden group"
+                className="px-6 py-4 sm:px-8 sm:py-6 text-sm sm:text-base font-bold rounded-md transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,204,7,0.6)] relative overflow-hidden group touch-manipulation w-full sm:w-auto"
                 style={{ backgroundColor: "#FFCC07", color: "#000000" }}
                 onClick={() => {
                   document
@@ -108,9 +108,9 @@ export function Hero() {
                   <motion.span
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
-                    className="inline-block ml-2"
+                    className="inline-block ml-1.5 sm:ml-2"
                   >
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.span>
                 </span>
               </MagneticButton>
@@ -119,13 +119,13 @@ export function Hero() {
 
           {/* Right Logo */}
           <motion.div
-            className="relative flex items-center justify-center order-first md:order-last h-75 sm:h-100 md:h-auto"
+            className="relative flex items-center justify-center order-first md:order-last h-64 sm:h-80 md:h-auto"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           >
             <motion.div
-              className="relative w-full max-w-70 sm:max-w-md md:max-w-lg aspect-square"
+              className="relative w-full max-w-[280px] sm:max-w-xs md:max-w-md lg:max-w-lg aspect-square"
               style={{
                 filter:
                   "drop-shadow(0 25px 50px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(255, 204, 7, 0.4))",

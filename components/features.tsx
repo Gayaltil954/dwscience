@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize2, Settings } from 'lucide-react';
 
 const containerVariants = {
@@ -28,9 +28,11 @@ const itemVariants = {
 };
 
 export function Features() {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
@@ -50,6 +52,33 @@ export function Features() {
       setIsMuted(!isMuted);
     }
   };
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(video.currentTime);
+    };
+
+    const handleLoadedMetadata = () => {
+      setDuration(video.duration);
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, []);
   return (
     <motion.section
       initial="hidden"
@@ -77,7 +106,7 @@ export function Features() {
       />
       
       {/* Content Container */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex justify-center items-center">
           
           {/* Modern Video Showcase */}
@@ -88,25 +117,25 @@ export function Features() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="mb-6"
+              className="mb-4 sm:mb-6"
             >
-              <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
                 <div>
-                  <div className="flex items-center gap-3 mb-3 flex-wrap">
-                    <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-sm font-bold shadow-lg">
-                      🏆 Island 1st Place - 2023 O/L
+                  <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 flex-wrap">
+                    <span className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs sm:text-sm font-bold shadow-lg">
+                      🏆 Island 1st - 2023 O/L
                     </span>
                     
                   </div>
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <div className="flex items-center gap-2 text-sm text-gray-300">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-black font-bold text-xs">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-300">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-black font-bold text-[10px] sm:text-xs">
                         DW
                       </div>
-                      <span className="font-medium">Dilini Weerakkody · Science Teacher</span>
+                      <span className="font-medium text-xs sm:text-sm">Dilini Weerakkody · Teacher</span>
                     </div>
-                    <div className="h-4 w-px bg-gray-600" />
-                    <div className="flex items-center gap-1 text-sm text-gray-300">
+                    <div className="h-3 sm:h-4 w-px bg-gray-600 hidden xs:block" />
+                    <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-300">
                       <svg className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
@@ -125,15 +154,15 @@ export function Features() {
               onMouseLeave={() => setIsHovered(false)}
             >
               {/* Glassmorphic frame */}
-              <div className="relative rounded-3xl overflow-hidden backdrop-blur-xl bg-white/[0.02] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] p-3 sm:p-4">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-xl bg-white/[0.02] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] p-2 sm:p-3 md:p-4">
                 
                 {/* Video wrapper */}
-                <div className="relative rounded-2xl overflow-hidden bg-black">
+                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden bg-black">
                   <video
                     ref={videoRef}
                     src="/video.mp4"
                     poster="/demo-poster.jpg"
-                    autoPlay
+                    muted
                     loop
                     playsInline
                     preload="auto"
@@ -143,8 +172,8 @@ export function Features() {
                   </video>
                   
                   {/* Quality badge */}
-                  <div className="absolute top-4 right-4 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-sm border border-white/20 text-white text-xs font-bold">
-                    4K UHD
+                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg bg-black/80 backdrop-blur-sm border border-white/20 text-white text-[10px] sm:text-xs font-bold">
+                    4K
                   </div>
                   
 
@@ -153,56 +182,56 @@ export function Features() {
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
-                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6"
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-3 sm:p-4 md:p-6 touch-manipulation"
                   >
                     {/* Progress bar */}
-                    <div className="mb-4">
-                      <div className="h-1 bg-white/20 rounded-full overflow-hidden">
-                        <motion.div 
-                          className="h-full bg-gradient-to-r from-cyan-400 to-violet-400"
-                          initial={{ width: "0%" }}
-                          animate={{ width: "65%" }}
-                          transition={{ duration: 1 }}
+                    <div className="mb-2 sm:mb-3 md:mb-4">
+                      <div className="h-0.5 sm:h-1 bg-white/20 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-cyan-400 to-violet-400 transition-all duration-100"
+                          style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
                         />
                       </div>
                     </div>
                     
                     {/* Controls */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 sm:gap-3">
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={togglePlay}
-                          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all"
+                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all touch-manipulation"
                         >
                           {isPlaying ? (
-                            <Pause className="w-4 h-4 text-white" fill="white" />
+                            <Pause className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="white" />
                           ) : (
-                            <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+                            <Play className="w-3 h-3 sm:w-4 sm:h-4 text-white ml-0.5" fill="white" />
                           )}
                         </motion.button>
-                        <span className="text-xs text-white/80 font-medium">0:00 / 1:14</span>
+                        <span className="text-[10px] sm:text-xs text-white/80 font-medium">
+                          {formatTime(currentTime)} / 1:14
+                        </span>
                       </div>
                       
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={toggleMute}
-                          className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all touch-manipulation"
                         >
                           {isMuted ? (
-                            <VolumeX className="w-4 h-4 text-white" />
+                            <VolumeX className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                           ) : (
-                            <Volume2 className="w-4 h-4 text-white" />
+                            <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                           )}
                         </motion.button>
-                        <button className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all">
-                          <Settings className="w-4 h-4 text-white" />
+                        <button className="hidden sm:flex w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 items-center justify-center hover:bg-white/20 transition-all touch-manipulation">
+                          <Settings className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                         </button>
-                        <button className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all">
-                          <Maximize2 className="w-4 h-4 text-white" />
+                        <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all touch-manipulation">
+                          <Maximize2 className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                         </button>
                       </div>
                     </div>
@@ -218,17 +247,17 @@ export function Features() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="mt-8"
+              className="mt-4 sm:mt-6 md:mt-8"
             >
               {/* Achievement Banner */}
-              <div className="backdrop-blur-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-xl p-6 mb-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-3xl">
+              <div className="backdrop-blur-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-5 md:mb-6">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-2xl sm:text-3xl">
                     🥇
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2">Island First Achievement - 2023</h3>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1.5 sm:mb-2">Island First - 2023</h3>
+                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
                       My student achieved <span className="font-bold text-yellow-400">Island 1st place</span> in the 2023 G.C.E. O/L Examination, English Medium. 
                       Proven track record of excellence with consistent <span className="font-semibold">A grades</span> and top rankings.
                     </p>
@@ -236,18 +265,18 @@ export function Features() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-yellow-400 mb-1">1st</div>
-                  <div className="text-xs text-gray-400">Island Rank 2023</div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                  <div className="text-xl sm:text-2xl font-bold text-yellow-400 mb-0.5 sm:mb-1">1st</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Island Rank 2023</div>
                 </div>
-                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-white mb-1">100%</div>
-                  <div className="text-xs text-gray-400">Pass Rate</div>
+                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                  <div className="text-xl sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">100%</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Pass Rate</div>
                 </div>
-                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-white mb-1">A+</div>
-                  <div className="text-xs text-gray-400">Top Results</div>
+                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                  <div className="text-xl sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">A+</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Top Results</div>
                 </div>
                 
               </div>

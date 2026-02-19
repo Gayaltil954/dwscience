@@ -37,7 +37,7 @@ export function Contact() {
   return (
     <motion.section 
       id="contact" 
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-background"
+      className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 md:px-6 lg:px-8 bg-background"
       initial="hidden"
       whileInView="visible"
       viewport={defaultViewport}
@@ -45,12 +45,12 @@ export function Contact() {
     >
       <div className="max-w-7xl mx-auto">
         <motion.div 
-          className="grid md:grid-cols-2 gap-8 lg:gap-12 bg-card rounded-3xl overflow-hidden animate-fade-in-up shadow-2xl hover:shadow-[0_0_60px_rgba(255,204,7,0.3)] transition-shadow duration-500"
+          className="grid md:grid-cols-2 gap-0 bg-card rounded-2xl sm:rounded-3xl overflow-hidden animate-fade-in-up shadow-2xl hover:shadow-[0_0_60px_rgba(255,204,7,0.3)] transition-shadow duration-500"
           variants={fadeInUp}
         >
           {/* Left Side - Contact Info */}
           <div
-            className="p-8 sm:p-12 flex flex-col justify-between relative overflow-hidden"
+            className="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-between relative overflow-hidden"
             style={{ backgroundColor: "#FFCC07" }}
           >
             {/* Animated background gradient */}
@@ -64,7 +64,7 @@ export function Contact() {
 
             <div className="relative z-10">
               <h3
-                className="text-3xl sm:text-4xl font-black mb-3 animate-fade-in-up"
+                className="text-2xl sm:text-3xl md:text-4xl font-black mb-2 sm:mb-3 animate-fade-in-up"
                 style={{
                   color: "#000000",
                   animationDelay: "100ms",
@@ -74,7 +74,7 @@ export function Contact() {
                 Contact Information
               </h3>
               <p
-                className="mb-12 text-lg animate-fade-in-up"
+                className="mb-8 sm:mb-10 md:mb-12 text-base sm:text-lg animate-fade-in-up"
                 style={{
                   color: "rgba(0,0,0,0.7)",
                   animationDelay: "200ms",
@@ -84,50 +84,50 @@ export function Contact() {
                 We&apos;re here to support your learning journey.
               </p>
 
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 <a
                   href="tel:+94716945070"
-                  className="flex items-start gap-4 animate-fade-in-up hover:translate-x-2 transition-transform duration-300 group"
+                  className="flex items-start gap-3 sm:gap-4 animate-fade-in-up hover:translate-x-2 transition-transform duration-300 group"
                   style={{ animationDelay: "300ms", animationFillMode: "both" }}
                 >
-                  <div className="p-2 rounded-lg bg-black/10 group-hover:bg-black/20 transition-colors">
+                  <div className="p-2 rounded-lg bg-black/10 group-hover:bg-black/20 transition-colors shrink-0">
                     <Phone
-                      className="w-6 h-6 shrink-0"
+                      className="w-5 h-5 sm:w-6 sm:h-6"
                       style={{ color: "#000000" }}
                     />
                   </div>
                   <div>
-                    <p className="font-semibold" style={{ color: "#000000" }}>
+                    <p className="font-semibold text-sm sm:text-base" style={{ color: "#000000" }}>
                       Phone
                     </p>
-                    <p style={{ color: "rgba(0,0,0,0.7)" }}>071 694 5070</p>
+                    <p className="text-sm sm:text-base" style={{ color: "rgba(0,0,0,0.7)" }}>071 694 5070</p>
                   </div>
                 </a>
 
                 <div
-                  className="flex items-start gap-4 animate-fade-in-up hover:translate-x-2 transition-transform duration-300"
+                  className="flex items-start gap-3 sm:gap-4 animate-fade-in-up hover:translate-x-2 transition-transform duration-300"
                   style={{ animationDelay: "400ms", animationFillMode: "both" }}
                 >
                   <a
                     href="mailto:diliniweerakkodi91@gmail.com"
-                    className="flex items-start gap-4 animate-fade-in-up hover:translate-x-2 transition-transform duration-300 group"
+                    className="flex items-start gap-3 sm:gap-4 animate-fade-in-up hover:translate-x-2 transition-transform duration-300 group"
                     style={{
                       animationDelay: "400ms",
                       animationFillMode: "both",
                     }}
                   >
-                    <div className="p-2 rounded-lg bg-black/10 group-hover:bg-black/20 transition-colors">
+                    <div className="p-2 rounded-lg bg-black/10 group-hover:bg-black/20 transition-colors shrink-0">
                       <Mail
-                        className="w-6 h-6 shrink-0"
+                        className="w-5 h-5 sm:w-6 sm:h-6"
                         style={{ color: "#000000" }}
                       />
                     </div>
                     <div>
-                      <p className="font-semibold" style={{ color: "#000000" }}>
+                      <p className="font-semibold text-sm sm:text-base" style={{ color: "#000000" }}>
                         Email
                       </p>
                       <p
-                        className="break-all"
+                        className="break-all text-xs sm:text-sm md:text-base"
                         style={{ color: "rgba(0,0,0,0.7)" }}
                       >
                         diliniweerakkodi91@gmail.com
@@ -137,20 +137,20 @@ export function Contact() {
                 </div>
 
                 <div
-                  className="flex items-start gap-4 animate-fade-in-up"
+                  className="flex items-start gap-3 sm:gap-4 animate-fade-in-up"
                   style={{ animationDelay: "500ms", animationFillMode: "both" }}
                 >
-                  <div className="p-2 rounded-lg bg-black/10">
+                  <div className="p-2 rounded-lg bg-black/10 shrink-0">
                     <MapPin
-                      className="w-6 h-6 shrink-0"
+                      className="w-5 h-5 sm:w-6 sm:h-6"
                       style={{ color: "#000000" }}
                     />
                   </div>
                   <div>
-                    <p className="font-semibold" style={{ color: "#000000" }}>
+                    <p className="font-semibold text-sm sm:text-base" style={{ color: "#000000" }}>
                       Our Learning Centers
                     </p>
-                    <p style={{ color: "rgba(0,0,0,0.7)" }}>
+                    <p className="text-xs sm:text-sm md:text-base" style={{ color: "rgba(0,0,0,0.7)" }}>
                       Sunray - Galle
                       <br />
                       Zigma - Baddegama
@@ -163,40 +163,40 @@ export function Contact() {
             </div>
 
             <div
-              className="flex gap-4 mt-8 relative z-10 animate-fade-in-up"
+              className="flex gap-3 sm:gap-4 mt-6 sm:mt-8 relative z-10 animate-fade-in-up"
               style={{ animationDelay: "600ms", animationFillMode: "both" }}
             >
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full hover:scale-125 hover:rotate-12 transition-all duration-300"
+                className="rounded-full hover:scale-125 hover:rotate-12 transition-all duration-300 touch-manipulation w-10 h-10 sm:w-12 sm:h-12"
                 style={{ backgroundColor: "rgba(0,0,0,0.2)", color: "#000000" }}
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full hover:scale-125 hover:rotate-12 transition-all duration-300"
+                className="rounded-full hover:scale-125 hover:rotate-12 transition-all duration-300 touch-manipulation w-10 h-10 sm:w-12 sm:h-12"
                 style={{ backgroundColor: "rgba(0,0,0,0.2)", color: "#000000" }}
               >
-                <Youtube className="w-5 h-5" />
+                <Youtube className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full hover:scale-125 hover:rotate-12 transition-all duration-300"
+                className="rounded-full hover:scale-125 hover:rotate-12 transition-all duration-300 touch-manipulation w-10 h-10 sm:w-12 sm:h-12"
                 style={{ backgroundColor: "rgba(0,0,0,0.2)", color: "#000000" }}
               >
-                <Phone className="w-5 h-5" />
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
           </div>
 
           {/* Right Side - Form */}
-          <div className="p-8 sm:p-12" style={{ backgroundColor: "#ffffff" }}>
-            <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-6 sm:p-8 md:p-10 lg:p-12" style={{ backgroundColor: "#ffffff" }}>
+            <form ref={formRef} className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div
                   className="animate-fade-in-up"
                   style={{ animationDelay: "200ms", animationFillMode: "both" }}
