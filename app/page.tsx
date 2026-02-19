@@ -1,7 +1,6 @@
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Features } from "@/components/features";
-import { StatsSection } from "@/components/stats-section";
 import { Process } from "@/components/process";
 import { Gallery } from "@/components/gallery";
 import { ClassCenters } from "@/components/class-centers";
@@ -48,7 +47,6 @@ export default function Home() {
       <main className="min-h-screen bg-background relative">
         <Hero />
         <Features />
-        <StatsSection />
         <Process />
         <Gallery />
         <ClassCenters />

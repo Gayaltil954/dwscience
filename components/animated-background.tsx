@@ -1,8 +1,16 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/lib/hooks';
 
 export function AnimatedBackground() {
+  const isMobile = useIsMobile();
+
+  // Disable on mobile for better performance
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       {/* Animated gradient orbs */}

@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer, staggerItem, defaultViewport } from '@/lib/animations';
+import RippleGrid from '@/components/ripple-grid';
+import { useIsMobile } from '@/lib/hooks';
 
 export function Process() {
   const [visibleIcons, setVisibleIcons] = useState<Set<number>>(new Set());
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const isMobile = useIsMobile();
 
   const steps = [
     { 
@@ -114,12 +117,25 @@ export function Process() {
   return (
     <motion.section 
       id="process" 
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden relative"
       initial="hidden"
       whileInView="visible"
       viewport={defaultViewport}
       variants={staggerContainer}
     >
+      {/* RippleGrid Background Effect */}
+      <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
+        <RippleGrid
+          enableRainbow={false}
+          gridColor="#FFCC07"
+          rippleIntensity={0.05}
+          gridSize={10}
+          gridThickness={15}
+          mouseInteraction={false}
+          mouseInteractionRadius={1.2}
+          opacity={0.5}
+        />
+      </div>
       <style>{`
         @keyframes drawPath {
           to {
@@ -358,12 +374,12 @@ export function Process() {
         }
       `}</style>
       
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground text-center mb-20 text-balance">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground text-center mb-20 text-balance relative z-10">
           Our Process
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-16 relative z-10">
           {steps.map((step, index) => {
             const isVisible = visibleIcons.has(index);
             const animationDirection = index % 3 === 0 ? 'animate-slide-left' : index % 3 === 1 ? 'animate-fade-up' : 'animate-slide-right';

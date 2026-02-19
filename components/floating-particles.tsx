@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useIsMobile } from '@/lib/hooks';
 
 interface Particle {
   id: number;
@@ -13,12 +14,17 @@ interface Particle {
 }
 
 export function FloatingParticles() {
+  const isMobile = useIsMobile();
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
+    // Reduce particles on mobile or skip entirely
+    if (isMobile) return;
+
     const generateParticles = () => {
       const newParticles: Particle[] = [];
-      for (let i = 0; i < 20; i++) {
+      const particleCount = isMobile ? 8 : 20;
+      for (let i = 0; i < particleCount; i++) {
         newParticles.push({
           id: i,
           x: Math.random() * 100,
@@ -32,7 +38,12 @@ export function FloatingParticles() {
     };
 
     generateParticles();
-  }, []);
+  }, [isMobile]);
+
+  // Skip rendering on mobile
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 opacity-30">

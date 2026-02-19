@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MapPin, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/lib/hooks';
+import LiquidEther from './liquid-ether';
 
 interface Center {
   id: number;
@@ -172,28 +174,8 @@ export function ClassCenters() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    
-    let resizeTimer: NodeJS.Timeout;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(checkMobile, 150);
-    };
-    
-    window.addEventListener('resize', handleResize, { passive: true });
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer);
-    };
-  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -245,8 +227,31 @@ export function ClassCenters() {
   };
 
   return (
-    <section ref={sectionRef} id="class-centers" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
+    <section ref={sectionRef} id="class-centers" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden">
+      {/* LiquidEther Background Animation - Disabled on mobile for performance */}
+      {!isMobile && (
+        <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
+          <LiquidEther
+            colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+            mouseForce={15}
+            cursorSize={80}
+            isViscous
+            viscous={20}
+            iterationsViscous={12}
+            iterationsPoisson={12}
+            resolution={0.3}
+            isBounce={false}
+            autoDemo
+            autoSpeed={0.4}
+            autoIntensity={1.8}
+            takeoverDuration={0.2}
+            autoResumeDelay={3000}
+            autoRampDuration={0.5}
+          />
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground text-center mb-8 sm:mb-16 text-balance animate-fade-in-up">
           Class Centers
         </h2>

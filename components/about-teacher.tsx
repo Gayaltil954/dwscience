@@ -2,15 +2,21 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "@/lib/hooks";
+import LiquidEther from "./liquid-ether";
 
 export function AboutTeacher() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [statsVisible, setStatsVisible] = useState(false);
-  const [countedValue, setCountedValue] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Simplify/disable scroll animations on mobile for better performance
+    if (isMobile) {
+      setScrollProgress(1);
+      return;
+    }
+
     let ticking = false;
 
     const handleScroll = () => {
@@ -32,14 +38,6 @@ export function AboutTeacher() {
 
           setScrollProgress(progress);
 
-          // Check if stats are visible
-          if (statsRef.current && !statsVisible) {
-            const statsRect = statsRef.current.getBoundingClientRect();
-            if (statsRect.top < windowHeight * 0.8 && statsRect.bottom > 0) {
-              setStatsVisible(true);
-            }
-          }
-
           ticking = false;
         });
         ticking = true;
@@ -50,34 +48,7 @@ export function AboutTeacher() {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [statsVisible]);
-
-  // Counter animation effect
-  useEffect(() => {
-    if (!statsVisible) return;
-
-    let startTime: number;
-    const duration = 2000; // 2 seconds
-    const targetValue = 1000;
-
-    const animateCount = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Easing function (easeOutCubic)
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-      const currentValue = Math.floor(easedProgress * targetValue);
-
-      setCountedValue(currentValue);
-
-      if (progress < 1) {
-        requestAnimationFrame(animateCount);
-      }
-    };
-
-    requestAnimationFrame(animateCount);
-  }, [statsVisible]);
+  }, []);
 
   return (
     <section
@@ -89,9 +60,32 @@ export function AboutTeacher() {
           scrollProgress > 0 && scrollProgress < 1 ? "transform" : "auto",
       }}
     >
-      {/* Animated geometric background */}
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        {[...Array(6)].map((_, i) => (
+      {/* LiquidEther Background Animation - Disabled on mobile for performance */}
+      {!isMobile && (
+        <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
+          <LiquidEther
+            colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+            mouseForce={15}
+            cursorSize={80}
+            isViscous
+            viscous={20}
+            iterationsViscous={12}
+            iterationsPoisson={12}
+            resolution={0.3}
+            isBounce={false}
+            autoDemo
+            autoSpeed={0.4}
+            autoIntensity={1.8}
+            takeoverDuration={0.2}
+            autoResumeDelay={3000}
+            autoRampDuration={0.5}
+          />
+        </div>
+      )}
+
+      {/* Animated geometric background - Reduced on mobile */}
+      <div className="absolute inset-0 pointer-events-none opacity-30 z-1">
+        {[...Array(isMobile ? 3 : 6)].map((_, i) => (
           <div
             key={i}
             className="absolute border border-yellow-500/20"
@@ -318,163 +312,7 @@ export function AboutTeacher() {
                 ))}
               </div>
 
-              {/* Decorative stats or highlights */}
-              <div
-                ref={statsRef}
-                className="grid grid-cols-3 gap-4 pt-8"
-                style={{
-                  opacity: Math.max(0, (scrollProgress - 0.5) * 2),
-                  transform: `translateY(${Math.max(0, (1 - scrollProgress) * 30)}px)`,
-                  transition:
-                    "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out",
-                }}
-              >
-                <style>{`
-                  @keyframes shimmer {
-                    0% {
-                      transform: translateX(-100%) translateY(-100%) rotate(45deg);
-                    }
-                    100% {
-                      transform: translateX(300%) translateY(300%) rotate(45deg);
-                    }
-                  }
 
-                  @keyframes pulseGlow {
-                    0%, 100% {
-                      box-shadow: 0 0 20px rgba(234, 179, 8, 0.2), 
-                                  0 0 40px rgba(234, 179, 8, 0.1),
-                                  inset 0 0 20px rgba(234, 179, 8, 0.05);
-                    }
-                    50% {
-                      box-shadow: 0 0 30px rgba(234, 179, 8, 0.4), 
-                                  0 0 60px rgba(234, 179, 8, 0.2),
-                                  inset 0 0 30px rgba(234, 179, 8, 0.1);
-                    }
-                  }
-
-                  @keyframes float {
-                    0%, 100% {
-                      transform: translateY(0px);
-                    }
-                    50% {
-                      transform: translateY(-10px);
-                    }
-                  }
-
-                  @keyframes scaleIn {
-                    0% {
-                      transform: scale(0.5) rotate(-10deg);
-                      opacity: 0;
-                    }
-                    60% {
-                      transform: scale(1.1) rotate(5deg);
-                    }
-                    100% {
-                      transform: scale(1) rotate(0deg);
-                      opacity: 1;
-                    }
-                  }
-
-                  .stat-card {
-                    position: relative;
-                    overflow: hidden;
-                    animation: pulseGlow 3s ease-in-out infinite;
-                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                  }
-
-                  .stat-card::before {
-                    content: '';
-                    position: absolute;
-                    top: -50%;
-                    left: -50%;
-                    width: 200%;
-                    height: 200%;
-                    background: linear-gradient(
-                      45deg,
-                      transparent 30%,
-                      rgba(255, 255, 255, 0.3) 50%,
-                      transparent 70%
-                    );
-                    animation: shimmer 3s infinite;
-                  }
-
-                  .stat-card::after {
-                    content: '';
-                    position: absolute;
-                    inset: 0;
-                    background: radial-gradient(
-                      circle at center,
-                      rgba(234, 179, 8, 0.1) 0%,
-                      transparent 70%
-                    );
-                    opacity: 0;
-                    transition: opacity 0.4s ease;
-                  }
-
-                  .stat-card:hover {
-                    transform: translateY(-12px) scale(1.05);
-                    animation: float 2s ease-in-out infinite;
-                    box-shadow: 0 20px 40px rgba(234, 179, 8, 0.3), 
-                                0 10px 20px rgba(0, 0, 0, 0.2),
-                                inset 0 0 40px rgba(234, 179, 8, 0.15);
-                    border-color: rgba(234, 179, 8, 0.5);
-                  }
-
-                  .stat-card:hover::after {
-                    opacity: 1;
-                  }
-
-                  .stat-card:hover .stat-value {
-                    transform: scale(1.2);
-                    text-shadow: 0 0 20px rgba(234, 179, 8, 0.5),
-                                 0 0 40px rgba(234, 179, 8, 0.3);
-                  }
-
-                  .stat-card:hover .stat-label {
-                    color: #eab308;
-                  }
-
-                  .stat-value {
-                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                    display: inline-block;
-                  }
-
-                  .stat-label {
-                    transition: color 0.4s ease;
-                  }
-
-                  .stat-card-animated {
-                    animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-                  }
-                `}</style>
-                {[
-                  { label: "Experience", value: "Years", hasCounter: false },
-                  { label: "Students", value: "1000+", hasCounter: true },
-                  {
-                    label: "Excellence",
-                    value: "Top Rated",
-                    hasCounter: false,
-                  },
-                ].map((stat, index) => (
-                  <div
-                    key={index}
-                    className={`stat-card text-center p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/10 backdrop-blur-sm ${statsVisible ? "stat-card-animated" : ""}`}
-                    style={{
-                      animationDelay: statsVisible ? `${index * 0.15}s` : "0s",
-                      opacity: statsVisible ? 1 : 0,
-                    }}
-                  >
-                    <div className="stat-value text-2xl font-bold text-yellow-600">
-                      {stat.hasCounter && statsVisible
-                        ? `${countedValue}+`
-                        : stat.value}
-                    </div>
-                    <div className="stat-label text-sm text-muted-foreground mt-1">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>

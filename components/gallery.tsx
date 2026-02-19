@@ -3,12 +3,14 @@
 import Image from 'next/image';
 import { Play, ZoomIn } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { useIsMobile } from '@/lib/hooks';
 
-const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: { 
+const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0, isMobile }: { 
   items: { id: number; image: string; size: string; type: string }[]; 
   hoveredId: number | null; 
   setHoveredId: (id: number | null) => void;
-  offset?: number 
+  offset?: number;
+  isMobile: boolean;
 }) => {
   const getGridClass = (size: string) => {
     switch (size) {
@@ -21,12 +23,16 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
     }
   };
 
+  // Simplify grid for mobile
+  const gridClass = isMobile ? 'grid grid-cols-2 gap-2 w-full' : 'grid grid-cols-8 gap-3 w-300 shrink-0';
+  const gridStyle = isMobile ? {} : { gridAutoRows: '150px' };
+
   return (
-    <div className="grid grid-cols-8 gap-3 w-300 shrink-0" style={{ gridAutoRows: '150px' }}>
+    <div className={gridClass} style={gridStyle}>
       {items.map((item) => (
         <div
           key={`${item.id}-${offset}`}
-          className={`relative rounded-xl overflow-hidden cursor-pointer group ${getGridClass(item.size)}`}
+          className={`relative rounded-xl overflow-hidden cursor-pointer group ${isMobile ? 'aspect-square' : getGridClass(item.size)}`}
           onMouseEnter={() => setHoveredId(item.id)}
           onMouseLeave={() => setHoveredId(null)}
         >
@@ -36,9 +42,9 @@ const BentoGrid = ({ items, hoveredId, setHoveredId, offset = 0 }: {
             width={400}
             height={300}
             className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, 400px"
+            sizes="(max-width: 768px) 50vw, 400px"
             loading="lazy"
-            quality={100}
+            quality={isMobile ? 75 : 100}
             style={{ maxWidth: '100%', height: '100%' }}
           />
           
@@ -91,6 +97,7 @@ export function Gallery() {
   const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -127,7 +134,10 @@ export function Gallery() {
     { id: 15, image: '/class3.jpeg', size: 'small', type: 'image' },
     { id: 16, image: '/class4.jpeg', size: 'small', type: 'image' },
   ];
+// Show fewer items on mobile for better performance
+  const displayItems = isMobile ? galleryItems.slice(0, 8) : galleryItems;
 
+  
   const isAnimationRunning = isVisible && !isPaused;
 
   return (
@@ -140,9 +150,9 @@ export function Gallery() {
           Our Gallery
         </h2>
 
-        {/* Centered Static BentoGrid */}
-        <div className="flex justify-center items-center w-full">
-          <BentoGrid items={galleryItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={0} />
+        {/* Responsive Grid */}
+        <div className={isMobile ? 'w-full' : 'flex justify-center items-center w-full'}>
+          <BentoGrid items={displayItems} hoveredId={hoveredId} setHoveredId={setHoveredId} offset={0} isMobile={isMobile} />
         </div>
       </div>
     </section>

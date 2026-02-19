@@ -4,6 +4,7 @@ import { useRef, Suspense } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
 import * as THREE from 'three';
+import { useIsMobile } from '@/lib/hooks';
 
 function Logo3DModel() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -65,7 +66,7 @@ function Logo3DBox() {
   );
 }
 
-function Logo3DCylinder() {
+function Logo3DCylinder({ isMobile }: { isMobile: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const texture = useLoader(THREE.TextureLoader, '/logo.png');
 
@@ -85,7 +86,8 @@ function Logo3DCylinder() {
     }
   });
 
-  const totalLayers = 10;
+  // Reduce layers on mobile for better performance
+  const totalLayers = isMobile ? 5 : 10;
   const layerSpacing = 0.1;
   const startZ = -(totalLayers - 1) * layerSpacing / 2;
 
@@ -121,37 +123,46 @@ function Logo3DCylinder() {
 }
 
 export function Logo3D({ variant = 'cylinder' }: { variant?: 'plane' | 'box' | 'cylinder' }) {
+  const isMobile = useIsMobile();
+  
   return (
     <div className="w-full h-full">
-      <Canvas shadows>
+      <Canvas 
+        shadows={!isMobile} 
+        dpr={isMobile ? 1 : [1, 2]}
+        performance={{ min: 0.5 }}
+      >
         <PerspectiveCamera makeDefault position={[0, 0, 8]} />
         
-        {/* Lighting for realistic 3D effect */}
-        <ambientLight intensity={0.4} />
-        <directionalLight
-          position={[10, 10, 5]}
-          intensity={1.5}
-          castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
-        />
-        <pointLight position={[-10, -10, -5]} intensity={0.8} color="#FFCC07" />
-        <spotLight
-          position={[0, 10, 0]}
-          angle={0.3}
-          penumbra={1}
-          intensity={1.2}
-          castShadow
-          color="#ffffff"
-        />
-
-        {/* Environment for reflections */}
-        <Environment preset="city" />
+        {/* Lighting for realistic 3D effect - Simplified on mobile */}
+        <ambientLight intensity={isMobile ? 0.6 : 0.4} />
+        {!isMobile && (
+          <>
+            <directionalLight
+              position={[10, 10, 5]}
+              intensity={1.5}
+              castShadow
+              shadow-mapSize-width={2048}
+              shadow-mapSize-height={2048}
+            />
+            <pointLight position={[-10, -10, -5]} intensity={0.8} color="#FFCC07" />
+            <spotLight
+              position={[0, 10, 0]}
+              angle={0.3}
+              penumbra={1}
+              intensity={1.2}
+              castShadow
+              color="#ffffff"
+            />
+            {/* Environment for reflections */}
+            <Environment preset="city" />
+          </>
+        )}
 
         <Suspense fallback={null}>
           {variant === 'plane' && <Logo3DModel />}
           {variant === 'box' && <Logo3DBox />}
-          {variant === 'cylinder' && <Logo3DCylinder />}
+          {variant === 'cylinder' && <Logo3DCylinder isMobile={isMobile} />}
         </Suspense>
 
         {/* Optional: Add orbit controls for user interaction */}
