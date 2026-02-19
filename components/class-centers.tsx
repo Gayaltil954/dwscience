@@ -11,7 +11,12 @@ interface Center {
   id: number;
   name: string;
   image: string;
-  timetable: { day: string; time: string }[];
+  timetable: { 
+    grade: string;
+    group: string;
+    day: string;
+    time: string;
+  }[];
   location: string;
   mapUrl: string;
 }
@@ -101,7 +106,11 @@ const CenterCard = ({ center, isFlipped, onFlip }: { center: Center; isFlipped: 
                     className="flex justify-between items-center p-2.5 sm:p-3 rounded-lg"
                     style={{ backgroundColor: '#FFF9E6' }}
                   >
-                    <span className="text-xs sm:text-sm font-medium text-black">{slot.day}</span>
+                    <div className="text-xs sm:text-sm font-medium text-black">
+                      <div>{slot.grade} - {slot.group}</div>
+                      <div className="text-gray-500">{slot.day}</div>
+                    </div>
+
                     <span className="text-xs sm:text-sm font-semibold" style={{ color: '#FFCC07' }}>{slot.time}</span>
                   </div>
                 ))}
@@ -135,35 +144,58 @@ export function ClassCenters() {
     { 
       id: 1, 
       name: 'Galle Sunray', 
-      image: '/galle.jpg',
+      image: '/center2.jpeg',
       timetable: [
-        { day: 'Saturday', time: '4:00 PM - 6:00 PM' },
-        { day: 'Wednesday', time: '4:00 PM - 6:00 PM' },
-        { day: 'Saturday', time: '9:00 AM - 12:00 PM' },
-      ],
+        { grade: "Grade 6", group: "Group I", day: "Saturday", time: "12:30 PM - 2:00 PM" },
+        { grade: "Grade 6", group: "Group II", day: "Monday", time: "3:00 PM - 4:30 PM" },
+
+        // Grade 7
+        { grade: "Grade 7", group: "Group I", day: "Thursday", time: "3:00 PM - 4:30 PM" },
+        { grade: "Grade 7", group: "Group II", day: "Saturday", time: "8:00 AM - 9:30 AM" },
+
+        // Grade 8
+        { grade: "Grade 8", group: "Group I", day: "Tuesday", time: "3:00 PM - 4:30 PM" },
+        { grade: "Grade 8", group: "Group II", day: "Saturday", time: "5:00 PM - 6:30 PM" },
+
+        // Grade 9
+        { grade: "Grade 9", group: "Group I", day: "Saturday", time: "10:00 AM - 12:00 PM" },
+        { grade: "Grade 9", group: "Group II", day: "Wednesday", time: "3:00 PM - 5:00 PM" },
+
+        // Grade 10
+        { grade: "Grade 10", group: "Group I", day: "Monday", time: "5:00 PM - 7:00 PM" },
+        { grade: "Grade 10", group: "Group II", day: "Saturday", time: "2:30 PM - 4:30 PM" },
+
+        // Grade 11
+        { grade: "Grade 11", group: "Group I", day: "Tuesday", time: "5:00 PM - 7:00 PM" },
+        { grade: "Grade 11", group: "Group II", day: "Thursday", time: "5:00 PM - 7:00 PM" },
+
+        // Paper Class (O/L 2025)
+        { grade: "Paper Class", group: "2025 O/L", day: "Saturday", time: "6:30 AM - 8:30 AM" }
+    ],
       location: '123 Galle Road, Colombo 03',
       mapUrl: 'https://maps.google.com/?q=Colombo'
     },
     { 
       id: 2, 
-      name: 'Kandy Center', 
-      image: '/kandyy.jpg',
+      name: 'Baddegama Zigma', 
+      image: '/center3.jpeg',
       timetable: [
-        { day: 'Tuesday', time: '3:30 PM - 5:30 PM' },
-        { day: 'Thursday', time: '3:30 PM - 5:30 PM' },
-        { day: 'Sunday', time: '8:00 AM - 11:00 AM' },
+        { grade: "Grade 6", group: "Group I", day: "Sunday", time: "1:30 PM - 3:00 PM" },
+        { grade: "Grade 7", group: "Group I", day: "Friday", time: "5:00 PM - 6:30 PM" },
+        { grade: "Grade 8", group: "Group I", day: "Sunday", time: "5:30 PM - 7:00 PM" },
+        { grade: "Grade 9", group: "Group I", day: "Sunday", time: "3:00 PM - 5:00 PM" },
       ],
       location: '45 Peradeniya Road, Kandy',
       mapUrl: 'https://maps.google.com/?q=Kandy'
     },
     { 
       id: 3,
-      name: 'Galle Center', 
-      image: '/galle1.jpg',
+      name: 'Princeton College Hirimbura', 
+      image: '/center1.png',
       timetable: [
-        { day: 'Monday', time: '3:00 PM - 5:00 PM' },
-        { day: 'Friday', time: '3:00 PM - 5:00 PM' },
-        { day: 'Saturday', time: '2:00 PM - 5:00 PM' },
+        { grade: "Grade 6", group: "Group I", day: "Friday", time: "3:00 PM - 4:30 PM" },
+        { grade: "Grade 7", group: "Group I", day: "Wednesday", time: "5:30 PM - 7:00 PM" },
+        
       ],
       location: '78 Hikkaduwa Road, Galle',
       mapUrl: 'https://maps.google.com/?q=Galle'

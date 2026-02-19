@@ -77,7 +77,7 @@ export function Hero() {
                 , and
                 <span className="font-semibold text-foreground">
                   {" "}
-                  Prinstent (Hirikumbura)
+                  Princeton College (Hirimbura)
                 </span>
                 .
               </p>
