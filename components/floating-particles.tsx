@@ -23,14 +23,15 @@ export function FloatingParticles() {
 
     const generateParticles = () => {
       const newParticles: Particle[] = [];
-      const particleCount = isMobile ? 8 : 20;
+      // Reduced from 20 to 12 for better performance
+      const particleCount = 12;
       for (let i = 0; i < particleCount; i++) {
         newParticles.push({
           id: i,
           x: Math.random() * 100,
           y: Math.random() * 100,
-          size: Math.random() * 4 + 2,
-          duration: Math.random() * 10 + 10,
+          size: Math.random() * 3 + 2,
+          duration: Math.random() * 8 + 12,
           delay: Math.random() * 5,
         });
       }
@@ -46,7 +47,7 @@ export function FloatingParticles() {
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 opacity-30">
+    <div className="fixed inset-0 pointer-events-none -z-10 opacity-25" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', contain: 'layout style paint', zIndex: -10 }}>
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
@@ -56,19 +57,18 @@ export function FloatingParticles() {
             top: `${particle.y}%`,
             width: particle.size,
             height: particle.size,
-            background: 'radial-gradient(circle, rgba(255,204,7,0.8) 0%, rgba(255,204,7,0.2) 100%)',
+            background: 'radial-gradient(circle, rgba(255,204,7,0.6) 0%, rgba(255,204,7,0.1) 100%)',
+            willChange: 'transform, opacity',
           }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
-            opacity: [0.2, 0.6, 0.2],
-            scale: [1, 1.2, 1],
+            y: [0, -20, 0],
+            opacity: [0.2, 0.5, 0.2],
           }}
           transition={{
             duration: particle.duration,
             delay: particle.delay,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
         />
       ))}

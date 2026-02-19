@@ -15,13 +15,13 @@ export function ScrollProgress() {
       {/* Top progress bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFCC07] via-[#FFA500] to-[#FFCC07] origin-left z-[100]"
-        style={{ scaleX }}
+        style={{ scaleX, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
       />
       
       {/* Bottom glow effect */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 blur-md bg-gradient-to-r from-[#FFCC07] via-[#FFA500] to-[#FFCC07] origin-left z-[99]"
-        style={{ scaleX, opacity: 0.5 }}
+        style={{ scaleX, opacity: 0.5, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
       />
     </>
   );

@@ -61,6 +61,7 @@ export function Header() {
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled ? 'bg-background/98 shadow-xl' : 'bg-background/95 shadow-lg'
       } backdrop-blur-md`}
+      style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', overflow: 'visible' }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -169,23 +170,23 @@ export function Header() {
       `}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between items-center transition-all duration-300 ${
-          scrolled ? 'h-16' : 'h-20'
-        }`}>
+          scrolled ? 'h-20 sm:h-16' : 'h-24 sm:h-20'
+        }`} style={{ overflow: 'visible' }}>
           {/* Logo */}
-          <a href="#home" onClick={(e) => smoothScrollTo(e, '#home')} className="flex items-center gap-3 group relative cursor-pointer">
-            <div className="relative">
+          <a href="#home" onClick={(e) => smoothScrollTo(e, '#home')} className="flex items-center gap-2 sm:gap-3 group relative cursor-pointer z-50 flex-shrink-0 min-w-[48px] py-2" style={{ overflow: 'visible' }}>
+            <div className="relative" style={{ overflow: 'visible' }}>
               <div className="absolute inset-0 bg-accent/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-              <div className="relative transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <div className="relative transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300" style={{ overflow: 'visible' }}>
                 <Image
                   src="/logo.png"
                   alt="dwscience Logo"
-                  width={scrolled ? 36 : 40}
-                  height={scrolled ? 36 : 40}
-                  className="object-contain transition-all duration-300"
+                  width={scrolled ? 40 : 44}
+                  height={scrolled ? 40 : 44}
+                  className="object-contain"
                 />
               </div>
             </div>
-            <span className="text-foreground font-bold text-lg tracking-wide hidden sm:inline group-hover:text-accent transition-colors duration-300">
+            <span className="text-foreground font-bold text-sm sm:text-lg tracking-wide hidden sm:inline group-hover:text-accent transition-colors duration-300">
               dwscience.com
             </span>
           </a>

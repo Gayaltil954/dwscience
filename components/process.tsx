@@ -16,7 +16,7 @@ export function Process() {
       title: 'Teaching', 
       description: 'Engaging theory lessons with clear explanations, diagrams, and examples, combined with interactive discussions to strengthen understanding and clarify doubts.',
       icon: (
-        <svg viewBox="0 0 100 100" className="w-20 h-20">
+        <svg viewBox="0 0 100 100" className="w-14 h-14 sm:w-20 sm:h-20">
           <path d="M20 30 L50 15 L80 30 L80 50 L50 65 L20 50 Z" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M50 65 L50 85 M35 80 L50 85 L65 80" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M15 35 L15 55" fill="none" strokeWidth="2" strokeLinecap="round" />
@@ -27,7 +27,7 @@ export function Process() {
       title: 'Practical Classes', 
       description: 'Hands-on lab sessions where students conduct experiments, learn correct use of equipment, record observations, write lab reports, and follow proper safety procedures, preparing effectively for practical exams',
       icon: (
-        <svg viewBox="0 0 100 100" className="w-20 h-20">
+        <svg viewBox="0 0 100 100" className="w-14 h-14 sm:w-20 sm:h-20">
           <path d="M30 70 L30 50 Q30 35 40 30 L60 30 Q70 35 70 50 L70 70 Q70 80 60 85 L40 85 Q30 80 30 70" fill="none" strokeWidth="2" strokeLinecap="round" />
           <path d="M25 70 L75 70" fill="none" strokeWidth="2" strokeLinecap="round" />
           <circle cx="40" cy="25" r="3" fill="none" strokeWidth="2" />
@@ -40,7 +40,7 @@ export function Process() {
       title: 'Paper Classes', 
       description: 'Interactive sessions using past and model papers, teaching students how to structure answers, manage time, understand marking schemes, and develop strong exam techniques.',
       icon: (
-        <svg viewBox="0 0 100 100" className="w-20 h-20">
+        <svg viewBox="0 0 100 100" className="w-14 h-14 sm:w-20 sm:h-20">
           <path d="M25 15 L75 15 L75 85 L25 85 Z" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M35 30 L65 30 M35 45 L65 45 M35 60 L55 60" fill="none" strokeWidth="2" strokeLinecap="round" />
           <path d="M60 65 L65 70 L75 55" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -51,7 +51,7 @@ export function Process() {
       title: 'Paper Marking', 
       description: 'Careful correction of students answer scripts with clear feedback on strengths, mistakes, and strategies for improvement, helping students maximize their marks.',
       icon: (
-        <svg viewBox="0 0 100 100" className="w-20 h-20">
+        <svg viewBox="0 0 100 100" className="w-14 h-14 sm:w-20 sm:h-20">
           <path d="M30 20 L70 20 L70 80 L30 80 Z" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M40 35 L60 35 M40 50 L60 50 M40 65 L55 65" fill="none" strokeWidth="2" strokeLinecap="round" />
           <path d="M75 25 L85 15 M85 15 L85 25 M85 15 L75 15" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -64,7 +64,7 @@ export function Process() {
       title: 'Revision & Exam Preparation', 
       description: 'Targeted revision, mock exams, and focused practice to strengthen weak areas, build confidence, and ensure students are fully prepared for upcoming tests and final exams.',
       icon: (
-        <svg viewBox="0 0 100 100" className="w-20 h-20">
+        <svg viewBox="0 0 100 100" className="w-14 h-14 sm:w-20 sm:h-20">
           <circle cx="50" cy="50" r="30" fill="none" strokeWidth="2" />
           <path d="M50 30 L50 50 L65 60" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           <circle cx="50" cy="50" r="3" strokeWidth="2" />
@@ -76,7 +76,7 @@ export function Process() {
       title: 'Concept Reinforcement', 
       description: 'Regular exercises, quizzes, and mini-projects to strengthen understanding of key concepts, connect theory with practice, and boost retention for exams.',
       icon: (
-        <svg viewBox="0 0 100 100" className="w-20 h-20">
+        <svg viewBox="0 0 100 100" className="w-14 h-14 sm:w-20 sm:h-20">
           <circle cx="25" cy="30" r="8" fill="none" strokeWidth="2" />
           <circle cx="50" cy="50" r="8" fill="none" strokeWidth="2" />
           <circle cx="75" cy="30" r="8" fill="none" strokeWidth="2" />
@@ -122,18 +122,19 @@ export function Process() {
       whileInView="visible"
       viewport={defaultViewport}
       variants={staggerContainer}
+      style={{ contain: 'layout style paint', backgroundColor: 'var(--background)', position: 'relative', zIndex: 1 }}
     >
       {/* RippleGrid Background Effect */}
       <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
         <RippleGrid
           enableRainbow={false}
           gridColor="#FFCC07"
-          rippleIntensity={0.05}
+          rippleIntensity={0.04}
           gridSize={10}
           gridThickness={15}
           mouseInteraction={false}
           mouseInteractionRadius={1.2}
-          opacity={0.5}
+          opacity={0.45}
         />
       </div>
       <style>{`
@@ -295,6 +296,22 @@ export function Process() {
                       inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
         }
 
+        @media (max-width: 767px) {
+          .glass-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 30px 0 rgba(255, 204, 7, 0.15);
+          }
+          .glass-card:hover .icon-container {
+            transform: scale(1.05);
+          }
+          .glass-card:hover h3 {
+            transform: none;
+          }
+          .glass-card:hover p {
+            transform: none;
+          }
+        }
+
         .glass-card:hover .icon-container {
           transform: translateZ(50px) scale(1.1);
         }
@@ -375,11 +392,11 @@ export function Process() {
       `}</style>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground text-center mb-20 text-balance relative z-10">
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-foreground text-center mb-10 sm:mb-16 md:mb-20 text-balance relative z-10">
           Our Process
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-16 relative z-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-16 relative z-10">
           {steps.map((step, index) => {
             const isVisible = visibleIcons.has(index);
             const animationDirection = index % 3 === 0 ? 'animate-slide-left' : index % 3 === 1 ? 'animate-fade-up' : 'animate-slide-right';
@@ -391,14 +408,14 @@ export function Process() {
                   iconRefs.current[index] = el;
                 }}
                 data-index={index}
-                className={`glass-card ${isVisible ? `glass-card-visible ${animationDirection}` : ''} rounded-3xl p-8 flex flex-col items-center text-center group`}
+                className={`glass-card ${isVisible ? `glass-card-visible ${animationDirection}` : ''} rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col items-center text-center group`}
                 style={{
                   opacity: isVisible ? 1 : 0,
                   animationDelay: `${index * 100}ms`
                 }}
               >
                 {/* Icon */}
-                <div className={`icon-container ${isVisible ? 'icon-visible animate-icon-scale' : ''} mb-6`}
+                <div className={`icon-container ${isVisible ? 'icon-visible animate-icon-scale' : ''} mb-4 sm:mb-6`}
                      style={{
                        opacity: isVisible ? 1 : 0,
                        animationDelay: `${index * 100 + 150}ms`
@@ -409,7 +426,7 @@ export function Process() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3 transition-all duration-500"
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3 transition-all duration-500"
                     style={{
                       opacity: isVisible ? 1 : 0,
                       transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -420,7 +437,7 @@ export function Process() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-foreground/70 max-w-xs transition-all duration-500"
+                <p className="text-xs sm:text-sm text-foreground/70 max-w-xs transition-all duration-500"
                    style={{
                      opacity: isVisible ? 1 : 0,
                      transform: isVisible ? 'translateY(0)' : 'translateY(20px)',

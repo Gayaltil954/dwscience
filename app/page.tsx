@@ -44,7 +44,7 @@ export default function Home() {
       <AnimatedBackground />
       <FloatingParticles />
       <Header />
-      <main className="min-h-screen bg-background relative">
+      <main className="min-h-screen bg-background relative" style={{ isolation: 'isolate', backgroundColor: 'var(--background)', position: 'relative' }}>
         <Hero />
         <Features />
         <Process />

@@ -3,6 +3,22 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: transparent;
+}
+
+.gridscan canvas {
+  background: transparent !important;
+  opacity: 0;
+  animation: fadeInGrid 0.5s ease-out 0.1s forwards;
+}
+
+@keyframes fadeInGrid {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .gridscan__preview {

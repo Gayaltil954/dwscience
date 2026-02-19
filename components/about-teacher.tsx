@@ -18,8 +18,11 @@ export function AboutTeacher() {
     }
 
     let ticking = false;
+    let lastKnownScrollPosition = 0;
 
     const handleScroll = () => {
+      lastKnownScrollPosition = window.scrollY;
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
           if (!sectionRef.current) {
@@ -30,11 +33,10 @@ export function AboutTeacher() {
           const rect = sectionRef.current.getBoundingClientRect();
           const windowHeight = window.innerHeight;
 
-          // Calculate smooth progress
+          // Calculate smooth progress - optimized
           const visibleHeight =
             Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-          const visibilityRatio = visibleHeight / rect.height;
-          const progress = Math.max(0, Math.min(1, visibilityRatio * 2.5));
+          const progress = Math.max(0, Math.min(1, (visibleHeight / windowHeight) * 1.5));
 
           setScrollProgress(progress);
 
@@ -48,7 +50,7 @@ export function AboutTeacher() {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
@@ -56,8 +58,10 @@ export function AboutTeacher() {
       id="about"
       className="relative min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
       style={{
-        willChange:
-          scrollProgress > 0 && scrollProgress < 1 ? "transform" : "auto",
+        contain: 'layout style paint',
+        backgroundColor: 'var(--background)',
+        position: 'relative',
+        zIndex: 1,
       }}
     >
       {/* LiquidEther Background Animation - Disabled on mobile for performance */}
@@ -83,25 +87,21 @@ export function AboutTeacher() {
         </div>
       )}
 
-      {/* Animated geometric background - Reduced on mobile */}
-      <div className="absolute inset-0 pointer-events-none opacity-30 z-1">
-        {[...Array(isMobile ? 3 : 6)].map((_, i) => (
+      {/* Simplified geometric background - Reduced complexity for smooth scrolling */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 z-1">
+        {[...Array(isMobile ? 2 : 4)].map((_, i) => (
           <div
             key={i}
-            className="absolute border border-yellow-500/20"
+            className="absolute border border-yellow-500/15"
             style={{
-              width: `${100 + i * 50}px`,
-              height: `${100 + i * 50}px`,
-              left: `${20 + i * 15}%`,
-              top: `${10 + (i % 3) * 30}%`,
+              width: `${120 + i * 60}px`,
+              height: `${120 + i * 60}px`,
+              left: `${25 + i * 20}%`,
+              top: `${15 + (i % 2) * 35}%`,
               borderRadius: i % 2 === 0 ? "50%" : "0",
-              transform: `rotate(${i * 15 + scrollProgress * 360}deg) scale(${0.5 + scrollProgress * 0.5})`,
-              opacity: scrollProgress * 0.4,
-              willChange:
-                scrollProgress > 0 && scrollProgress < 1
-                  ? "transform, opacity"
-                  : "auto",
-              transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+              transform: `rotate(${i * 20}deg)`,
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
             }}
           />
         ))}

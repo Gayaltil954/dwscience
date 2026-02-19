@@ -117,19 +117,7 @@ const CenterCard = ({ center, isFlipped, onFlip }: { center: Center; isFlipped: 
               </div>
             </div>
 
-            <a
-              href={center.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-semibold text-black transition-all duration-300 hover:scale-105 active:scale-95"
-              style={{ backgroundColor: '#FFCC07' }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <MapPin className="w-5 h-5" />
-              <span className="text-sm sm:text-base">Open in Google Maps</span>
-            </a>
-
-            <p className="text-center text-gray-400 text-xs mt-3">
+            <p className="text-center text-gray-400 text-sm mt-4">
               Tap card to flip back
             </p>
           </div>
@@ -259,7 +247,7 @@ export function ClassCenters() {
   };
 
   return (
-    <section ref={sectionRef} id="class-centers" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden">
+    <section ref={sectionRef} id="class-centers" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden" style={{ contain: 'layout style paint', backgroundColor: 'var(--background)', position: 'relative', zIndex: 1 }}>
       {/* LiquidEther Background Animation - Disabled on mobile for performance */}
       {!isMobile && (
         <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>

@@ -86,23 +86,24 @@ export function Features() {
       viewport={{ once: true, amount: 0.2 }}
       variants={containerVariants}
       className="relative overflow-hidden py-20 sm:py-28 lg:py-36 bg-gradient-to-br from-[#020420] via-[#0a0633] to-[#1a0b3d]"
+      style={{ contain: 'layout style paint', position: 'relative', zIndex: 1 }}
     >
-      {/* Animated background elements */}
+      {/* Optimized background elements - reduced complexity */}
       <motion.div 
         animate={{ 
-          scale: [1, 1.2, 1],
-          rotate: [0, 90, 0],
+          scale: [1, 1.1, 1],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="pointer-events-none absolute left-10 top-10 w-96 h-96 rounded-full bg-cyan-500/10 blur-[100px]" 
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        className="pointer-events-none absolute left-10 top-10 w-80 h-80 rounded-full bg-cyan-500/8"
+        style={{ filter: 'blur(80px)', willChange: 'transform' }}
       />
       <motion.div 
         animate={{ 
-          scale: [1.2, 1, 1.2],
-          rotate: [90, 0, 90],
+          scale: [1.1, 1, 1.1],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="pointer-events-none absolute right-10 bottom-10 w-96 h-96 rounded-full bg-violet-500/10 blur-[100px]" 
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        className="pointer-events-none absolute right-10 bottom-10 w-80 h-80 rounded-full bg-violet-500/8"
+        style={{ filter: 'blur(80px)', willChange: 'transform' }}
       />
       
       {/* Content Container */}

@@ -9,30 +9,59 @@ import { MagneticButton } from "@/components/magnetic-button";
 import { TextReveal } from "@/components/text-reveal";
 import { useIsMobile } from "@/lib/hooks";
 import { GridScan } from "@/components/grid-scan";
+import { useState, useEffect } from "react";
 
 export function Hero() {
   const isMobile = useIsMobile();
+  const [isGridReady, setIsGridReady] = useState(false);
+
+  // Delay GridScan initialization slightly on desktop to prevent white flash
+  useEffect(() => {
+    // On mobile, load immediately. On desktop, slight delay to ensure background is painted first
+    const delay = isMobile ? 0 : 50;
+    const timer = setTimeout(() => {
+      setIsGridReady(true);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [isMobile]);
 
   return (
     <section
       id="home"
-      className="min-h-screen bg-background pt-16 sm:pt-20 pb-8 sm:pb-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
+      className="min-h-screen pt-36 sm:pt-20 pb-8 sm:pb-12 px-3 sm:px-4 md:px-6 lg:px-8 relative overflow-hidden"
+      style={{ 
+        contain: 'layout style paint', 
+        backgroundColor: '#000032',
+        background: 'linear-gradient(180deg, #000032 0%, #0a0520 100%)'
+      }}
     >
-      {/* GridScan Background Animation */}
-      <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
-        <GridScan
-          sensitivity={isMobile ? 0.3 : 0.55}
-          lineThickness={isMobile ? 0.8 : 1}
-          linesColor="#392e4e"
-          gridScale={isMobile ? 0.15 : 0.1}
-          scanColor="#FF9FFC"
-          scanOpacity={isMobile ? 0.25 : 0.4}
-          enablePost={!isMobile}
-          bloomIntensity={isMobile ? 0 : 0.6}
-          chromaticAberration={isMobile ? 0 : 0.002}
-          noiseIntensity={isMobile ? 0.005 : 0.01}
-        />
-      </div>
+      {/* Solid background layer - always visible */}
+      <div 
+        className="absolute inset-0 z-0" 
+        style={{ 
+          backgroundColor: '#000032',
+          background: 'linear-gradient(180deg, #000032 0%, #0a0520 100%)',
+          pointerEvents: 'none'
+        }}
+      />
+      
+      {/* GridScan Background Animation - Loads after initial render */}
+      {isGridReady && (
+        <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none', opacity: 0, animation: 'fadeIn 0.6s ease-out 0.2s forwards' }}>
+          <GridScan
+            sensitivity={isMobile ? 0.3 : 0.45}
+            lineThickness={isMobile ? 0.8 : 1}
+            linesColor="#392e4e"
+            gridScale={isMobile ? 0.15 : 0.1}
+            scanColor="#FF9FFC"
+            scanOpacity={isMobile ? 0.25 : 0.35}
+            enablePost={false}
+            bloomIntensity={0}
+            chromaticAberration={0}
+            noiseIntensity={0.005}
+          />
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center min-h-[calc(100vh-5rem)]">

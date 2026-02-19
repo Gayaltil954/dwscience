@@ -42,6 +42,7 @@ export function Contact() {
       whileInView="visible"
       viewport={defaultViewport}
       variants={staggerContainer}
+      style={{ contain: 'layout style paint', backgroundColor: 'var(--background)', position: 'relative', zIndex: 1 }}
     >
       <div className="max-w-7xl mx-auto">
         <motion.div 
@@ -210,10 +211,9 @@ export function Contact() {
                   <input
                     type="text"
                     name="firstName"
-                    placeholder="Sahan"
                     onFocus={() => setFocusedField("firstName")}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-all duration-300 hover:border-accent"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent focus:outline-none transition-all duration-300 hover:border-accent"
                     style={{
                       borderColor:
                         focusedField === "firstName" ? "#FFCC07" : "#cccccc",
@@ -239,10 +239,9 @@ export function Contact() {
                   <input
                     type="text"
                     name="lastName"
-                    placeholder="Perera"
                     onFocus={() => setFocusedField("lastName")}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-all duration-300 hover:border-accent"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent focus:outline-none transition-all duration-300 hover:border-accent"
                     style={{
                       borderColor:
                         focusedField === "lastName" ? "#FFCC07" : "#cccccc",
@@ -271,10 +270,9 @@ export function Contact() {
                   <input
                     type="email"
                     name="email"
-                    placeholder="sahan@example.com"
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-all duration-300 hover:border-accent"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent focus:outline-none transition-all duration-300 hover:border-accent"
                     style={{
                       borderColor:
                         focusedField === "email" ? "#FFCC07" : "#cccccc",
@@ -298,10 +296,9 @@ export function Contact() {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="077 123 4569"
                     onFocus={() => setFocusedField("phone")}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-all duration-300 hover:border-accent"
+                    className="w-full px-4 py-3 border-b-2 bg-transparent focus:outline-none transition-all duration-300 hover:border-accent"
                     style={{
                       borderColor:
                         focusedField === "phone" ? "#FFCC07" : "#cccccc",
@@ -362,11 +359,10 @@ export function Contact() {
                 </label>
                 <textarea
                   name="message"
-                  placeholder="Write your message..."
                   rows={4}
                   onFocus={() => setFocusedField("message")}
                   onBlur={() => setFocusedField(null)}
-                  className="w-full px-4 py-3 border-b-2 bg-transparent placeholder-gray-500 focus:outline-none transition-all duration-300 resize-none hover:border-accent"
+                  className="w-full px-4 py-3 border-b-2 bg-transparent focus:outline-none transition-all duration-300 resize-none hover:border-accent"
                   style={{
                     borderColor:
                       focusedField === "message" ? "#FFCC07" : "#cccccc",

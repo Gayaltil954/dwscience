@@ -141,7 +141,7 @@ export function Gallery() {
   const isAnimationRunning = isVisible && !isPaused;
 
   return (
-    <section ref={sectionRef} id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden">
+    <section ref={sectionRef} id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden" style={{ contain: 'layout style paint', backgroundColor: 'var(--background)', position: 'relative', zIndex: 1 }}>
       <div className="max-w-7xl mx-auto">
         <h2 
           className="text-4xl sm:text-5xl lg:text-6xl font-black text-center mb-16 text-balance"

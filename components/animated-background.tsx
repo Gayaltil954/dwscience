@@ -12,71 +12,54 @@ export function AnimatedBackground() {
   }
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-      {/* Animated gradient orbs */}
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', contain: 'layout style paint', zIndex: -10 }}>
+      {/* Optimized gradient orbs - reduced blur and simplified animations */}
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full blur-3xl opacity-20"
+        className="absolute w-[400px] h-[400px] rounded-full opacity-15"
         style={{
-          background: 'radial-gradient(circle, rgba(255,204,7,0.4) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(255,204,7,0.3) 0%, transparent 70%)',
           top: '10%',
           left: '10%',
+          filter: 'blur(80px)',
+          willChange: 'transform',
         }}
         animate={{
-          x: [0, 100, 0],
-          y: [0, -50, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      
-      <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full blur-3xl opacity-15"
-        style={{
-          background: 'radial-gradient(circle, rgba(255,165,0,0.3) 0%, transparent 70%)',
-          top: '50%',
-          right: '10%',
-        }}
-        animate={{
-          x: [0, -80, 0],
-          y: [0, 60, 0],
-          scale: [1.2, 1, 1.2],
+          x: [0, 50, 0],
+          y: [0, -30, 0],
         }}
         transition={{
           duration: 25,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "linear"
         }}
       />
       
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full blur-3xl opacity-20"
+        className="absolute w-[500px] h-[500px] rounded-full opacity-10"
         style={{
-          background: 'radial-gradient(circle, rgba(255,204,7,0.35) 0%, transparent 70%)',
-          bottom: '10%',
-          left: '30%',
+          background: 'radial-gradient(circle, rgba(255,165,0,0.25) 0%, transparent 70%)',
+          top: '50%',
+          right: '10%',
+          filter: 'blur(90px)',
+          willChange: 'transform',
         }}
         animate={{
-          x: [0, -60, 0],
-          y: [0, -40, 0],
-          scale: [1, 1.3, 1],
+          x: [0, -40, 0],
+          y: [0, 40, 0],
         }}
         transition={{
-          duration: 18,
+          duration: 30,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "linear"
         }}
       />
 
-      {/* Grid pattern overlay */}
+      {/* Static grid pattern - no animation needed */}
       <div 
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,204,7,0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(255,204,7,0.1) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(255,204,7,0.08) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(255,204,7,0.08) 1px, transparent 1px)`,
           backgroundSize: '50px 50px',
         }}
       />

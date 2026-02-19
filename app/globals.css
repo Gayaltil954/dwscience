@@ -88,13 +88,28 @@ body {
   /* Mobile optimizations */
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
-  overscroll-behavior-y: none;
+  /* Ensure background is always rendered */
+  min-height: 100vh;
+  position: relative;
+  /* Optimize repaints during scroll */
+  transform: translateZ(0);
+  /* Ensure no white gaps */
+  margin: 0;
+  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
   /* Prevent horizontal scroll */
   overflow-x: hidden;
+  /* Ensure solid background */
+  background-color: var(--background);
+  /* Enable smooth scrolling on desktop */
+  scroll-padding-top: 0;
+  /* Ensure no white gaps */
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 /* Touch interactions */
@@ -112,10 +127,75 @@ button, a, [role="button"] {
 }
 
 /* Performance optimizations */
-* {
-  /* Hardware acceleration for transforms */
+/* Apply hardware acceleration selectively instead of globally */
+.gpu-accelerated {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Fixed elements rendering optimization */
+.fixed {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Section optimization for smooth scrolling */
+section {
+  /* Improve compositing performance */
+  isolation: isolate;
+  /* Ensure no gaps between sections */
+  position: relative;
+  background-color: var(--background);
+}
+
+/* Hero section - ensure solid background always visible */
+section#home {
+  background-color: #000032 !important;
+  background: #000032 !important;
+}
+
+/* Ensure main container fills viewport */
+main {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+/* Optimize animations for 60fps */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    /* Force animations to use compositor */
+    animation-timing-function: ease-out;
+  }
+}
+
+/* Prevent white flashes during scroll */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background);
+  z-index: -100;
+  pointer-events: none;
+}
+
+/* Desktop optimizations for smooth scrolling */
+@media (min-width: 769px) {
+  /* Enable smooth momentum scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Optimize blur effects on desktop */
+  [class*="blur-"] {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
 }
 
 /* Optimize for mobile devices */
@@ -148,6 +228,15 @@ button, a, [role="button"] {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
